@@ -17,7 +17,12 @@ class StatPeminjamanWidget extends BaseWidget
                 ->description('Peminjaman Masuk')
                 ->icon('heroicon-o-inbox-arrow-down')
                 ->color('success'),
-            Stat::make('Total Member Perpustakaan', User::count())
+            Stat::make(
+                'Total Member Perpustakaan',
+                User::whereHas('roles', function ($query) {
+                    $query->where('name', 'member');
+                })->count()
+            )
                 ->descriptionIcon('heroicon-o-arrow-trending-up')
                 ->description('Member Perpustakaan')
                 ->icon('heroicon-o-user-group')

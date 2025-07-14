@@ -12,7 +12,7 @@
                         Ups, keranjang kamu kosong
                     </h4>
                     <p class="text-muted">Yuk tambahkan buku favorit kamu ke keranjang</p>
-                    <RouterLink class="btn btn-dark" to="/DaftarKoleksiRemaja"
+                    <RouterLink class="btn btn-dark" to="/Remaja/Koleksi"
                         >Cari Buku Sekarang</RouterLink
                     >
                 </div>

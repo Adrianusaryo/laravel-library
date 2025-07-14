@@ -8,7 +8,7 @@
                 <div v-if="daftarBuku.length === 0" class="text-center my-5">
                     <h4 class="fw-bold">Ups, keranjang kamu kosong</h4>
                     <p>Yuk tambahkan buku favorit kamu ke keranjang</p>
-                    <RouterLink class="btn btn-dark" to="/DaftarKoleksiDewasa"
+                    <RouterLink class="btn btn-dark" to="/Dewasa/Koleksi"
                         >Cari Buku Sekarang</RouterLink
                     >
                 </div>

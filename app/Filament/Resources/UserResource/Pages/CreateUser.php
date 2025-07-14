@@ -11,4 +11,9 @@ class CreateUser extends CreateRecord
     protected static string $resource = UserResource::class;
     protected static ?string $title = 'Tambah User';
     protected static ?string $breadcrumb = 'Tambah User';
+
+    protected function afterCreate(): void
+    {
+        $this->record->assignRole($this->data['role']);
+    }
 }

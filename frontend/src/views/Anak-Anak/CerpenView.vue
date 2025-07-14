@@ -8,8 +8,13 @@
                 </h5>
                 <p class="text-muted mb-4">Tingkatkan literasi membacamu hari ini!</p>
 
-                <form class="d-flex align-items-center mb-4" role="search">
+                <form
+                    class="d-flex align-items-center mb-4"
+                    role="search"
+                    @submit.prevent="handleSubmit"
+                >
                     <input
+                        v-model="searchKeyword"
                         class="form-control me-2 rounded"
                         type="search"
                         placeholder="Cari cerpen"
@@ -19,6 +24,13 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </form>
+
+                <div v-if="isSearching && cerpen.length === 0" class="text-center text-muted my-5">
+                    <h4 class="fw-bold text-dark" style="line-height: 15px">
+                        Ups, cerpen tidak ditemukan
+                    </h4>
+                    <p class="text-muted">Silakan kirimkan cerpen terbaik kamu.</p>
+                </div>
 
                 <div
                     class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3"
@@ -70,7 +82,7 @@
                     </div>
                 </div>
                 <div
-                    v-else
+                    v-else-if="cerpen.length === 0 && isLoading"
                     class="d-flex flex-column align-items-center justify-content-center text-center p-5"
                 >
                     <div
@@ -86,10 +98,13 @@
                     <small class="text-muted">Mohon tunggu sebentar ya!</small>
                 </div>
 
-                <!-- <nav aria-label="Pagination" class="mt-4">
+                <nav v-if="cerpen.length != 0" aria-label="Pagination" class="mt-4">
                     <ul class="pagination justify-content-center">
                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                            <a href="#" class="page-link" @click.prevent="loadBuku(currentPage - 1)"
+                            <a
+                                href="#"
+                                class="page-link"
+                                @click.prevent="loadCerpen(currentPage - 1)"
                                 >&laquo;</a
                             >
                         </li>
@@ -99,17 +114,20 @@
                             :key="page"
                             :class="{ active: currentPage === page }"
                         >
-                            <a href="#" class="page-link" @click.prevent="loadBuku(page)">{{
+                            <a href="#" class="page-link" @click.prevent="loadCerpen(page)">{{
                                 page
                             }}</a>
                         </li>
                         <li class="page-item" :class="{ disabled: currentPage === lastPage }">
-                            <a href="#" class="page-link" @click.prevent="loadBuku(currentPage + 1)"
+                            <a
+                                href="#"
+                                class="page-link"
+                                @click.prevent="loadCerpen(currentPage + 1)"
                                 >&raquo;</a
                             >
                         </li>
                     </ul>
-                </nav> -->
+                </nav>
             </div>
             <FooterRemaja />
         </div>
@@ -133,29 +151,89 @@ export default {
             cerpen: [],
             defaultCover,
             url: 'http://127.0.0.1:8000/storage/Cerpen/',
+            currentPage: 1,
+            lastPage: 1,
+            perPage: 1,
+            searchKeyword: '',
+            isLoading: false,
+            isSearching: false,
         }
+    },
+    computed: {
+        totalPages() {
+            return Array.from({ length: this.lastPage }, (_, i) => i + 1)
+        },
     },
     mounted() {
         this.token = sessionStorage.getItem('token')
         this.name = sessionStorage.getItem('name')
-        this.loadCerpen()
+        this.loadCerpen(this.currentPage)
     },
     methods: {
-        loadCerpen() {
+        loadCerpen(page = 1) {
+            this.isLoading = true
             axios
-                .get(`http://127.0.0.1:8000/api/Cerpen/LihatCerpen`, {
-                    headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-                })
+                .get(
+                    `http://127.0.0.1:8000/api/Cerpen/LihatCerpen?page=${page}&per_page=${this.perPage}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                        },
+                    },
+                )
                 .then((response) => {
-                    this.cerpen = response.data.data
+                    const res = response.data.data
+                    this.cerpen = res.data
+                    this.currentPage = res.current_page
+                    this.lastPage = res.last_page
                 })
                 .catch((error) => {
-                    console.error('Gagal memuat buku:', error)
+                    console.error('Gagal memuat cerpen:', error)
                 })
+                .finally(() => [(this.isLoading = false)])
         },
         goToDetail(cerpen) {
             sessionStorage.setItem('cerpen_id', cerpen.id)
             this.$router.push({ name: 'cerpenanakdetail' })
+        },
+        handleSubmit() {
+            const keyword = this.searchKeyword.trim()
+
+            if (keyword === '') {
+                this.isSearching = false
+                this.cerpen = []
+                this.currentPage = 1
+                this.lastPage = 1
+                this.loadCerpen(1)
+            } else {
+                this.searchCerpen()
+            }
+        },
+        searchCerpen() {
+            this.isSearching = true
+            axios
+                .get(`http://127.0.0.1:8000/api/Cerpen/LihatCerpen?per_page=${this.perPage}`, {
+                    headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                    },
+                })
+                .then((response) => {
+                    let allCerpen = response.data.data.data
+
+                    if (this.searchKeyword.trim() !== '') {
+                        const keyword = this.searchKeyword.toLowerCase()
+                        allCerpen = allCerpen.filter((cerpen) => {
+                            return cerpen.judul.toLowerCase().includes(keyword)
+                        })
+                    }
+
+                    this.cerpen = allCerpen
+                    this.currentPage = 1
+                    this.lastPage = Math.ceil(allCerpen.length / this.perPage)
+                })
+                .catch((error) => {
+                    console.error('Gagal memuat cerpen:', error)
+                })
         },
     },
 }

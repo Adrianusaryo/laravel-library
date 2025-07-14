@@ -30,15 +30,17 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="fw-bold text-dark">Jenis Kelamin</label>
-                                <div class="text-muted">{{ biodata.jenis_kelamin }}</div>
+                                <div class="text-muted">
+                                    {{ biodata.jenis_kelamin }}
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label class="fw-bold text-dark">No. WhatsApp</label>
-                                <div class="text-muted">{{ biodata.nomor_telfon }}</div>
+                                <div class="text-muted">{{ biodata.nomor_telfon || '-' }}</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="fw-bold text-dark">Alamat</label>
-                                <div class="text-muted">{{ biodata.alamat }}</div>
+                                <div class="text-muted">{{ biodata.alamat || '-' }}</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="fw-bold text-dark">Tanggal Lahir</label>

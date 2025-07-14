@@ -56,7 +56,7 @@
                                     <label for="password" class="form-label fw-medium text-dark"
                                         >Password</label
                                     >
-                                    <div class="input-group">
+                                    <div class="input-group has-validation">
                                         <input
                                             :type="showPassword ? 'text' : 'password'"
                                             class="form-control"
@@ -76,9 +76,9 @@
                                                 "
                                             ></i>
                                         </span>
-                                    </div>
-                                    <div v-if="errors.password" class="invalid-feedback">
-                                        {{ errors.password[0] }}
+                                        <div v-if="errors.password" class="invalid-feedback">
+                                            {{ errors.password[0] }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

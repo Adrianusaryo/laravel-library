@@ -9,6 +9,7 @@ use App\Models\Peminjaman;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use App\Models\PendingPeminjaman;
+use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -73,6 +74,22 @@ class PendingPeminjamanResource extends Resource
                 //
             ])
             ->actions([
+                Action::make('lihat_buku')
+                    ->label('Lihat Buku')
+                    ->icon('heroicon-o-book-open')
+                    ->color('info')
+                    ->modalHeading('Daftar Buku yang Dipinjam')
+                    ->modalSubheading(fn($record) => 'Kode Peminjaman: ' . $record->kode_peminjaman)
+                    ->modalContent(function ($record) {
+                        $html = '<ul class="list-disc list-inside text-sm text-gray-200 dark:text-gray-300 space-y-1">';
+
+                        foreach ($record->buku as $buku) {
+                            $html .= "<li>{$buku->judul} (Penulis: {$buku->penulis}, Penerbit : {$buku->penerbit})</li>";
+                        }
+                        $html .= '</ul>';
+                        return new HtmlString($html);
+                    })
+                    ->modalButton('Tutup'),
                 Action::make('borrowed')->label('Status Dipinjam')->color('success')->icon('heroicon-o-check')->action(function ($record) {
                     $record->update(['status' => 'Dipinjam']);
 

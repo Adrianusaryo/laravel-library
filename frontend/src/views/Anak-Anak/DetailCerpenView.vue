@@ -33,7 +33,7 @@ export default {
             const response = await axios.get('http://127.0.0.1:8000/api/Cerpen/LihatCerpen', {
                 headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
             })
-            const cerpens = response.data.data
+            const cerpens = response.data.data.data
             this.cerpen = cerpens.find((b) => b.id.toString() === cerpenId.toString())
         } catch (err) {
             this.error = 'Gagal mengambil data buku'

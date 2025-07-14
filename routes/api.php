@@ -20,6 +20,7 @@ Route::prefix('Auth')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('Buku')->group(function () {
+    Route::get('/KoleksiBukuHome', [BookController::class, 'HomeKoleksiBuku']);
     Route::get('/KoleksiBuku', [BookController::class, 'LihatKoleksiBuku']);
     Route::get('/DaftarKategori', [BookController::class, 'DaftarKategori']);
     Route::post('/UsulBuku', [BookController::class, 'UsulBuku']);
@@ -30,10 +31,10 @@ Route::middleware('auth:sanctum')->prefix('Buku')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('Leaderboard')->group(function () {
     Route::get('/LihatLeaderboardDewasa', [Leaderboard::class, 'showLeaderboardDewasa']);
-    // Route::get('/LihatLeaderboardRemaja', [Leaderboard::class, 'showLeaderboardRemaja']);
 });
 
 Route::middleware('auth:sanctum')->prefix('Acara')->group(function () {
+    Route::get('/ListAcaraHome', [EventController::class, 'HomeAcara']);
     Route::get('/ListAcara', [EventController::class, 'LihatAcara']);
 });
 

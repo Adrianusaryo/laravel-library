@@ -6,7 +6,7 @@
                     :src="url + event.poster"
                     :alt="`Cover Acara ${event.title}`"
                     class="img-fluid rounded shadow-lg"
-                    style="width: 450px; height: 500px; object-fit: cover; object-position: center"
+                    style="width: 500px; height: 400px; object-fit: cover; object-position: center"
                 />
             </div>
 

@@ -20,7 +20,7 @@
                     <p class="text-muted fw-semibold mb-1" style="font-size: 1.1rem">
                         Menyiapkan aktivitasmu di Perpustakaan...
                     </p>
-                    <small class="text-muted">Sedang memuat data, mohon tunggu sejenak ✨</small>
+                    <small class="text-muted">Sedang memuat data, mohon tunggu sejenak</small>
                 </div>
 
                 <div v-show="!isLoading">

@@ -21,7 +21,7 @@ class UsulBukuResource extends Resource
 
     protected static ?string $navigationGroup = 'Buku & Cerpen';
     protected static ?string $navigationLabel = 'Usul Buku';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-folder-open';
     protected static ?int $navigationSort = 4;
 
     public static function getModelLabel(): string

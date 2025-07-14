@@ -6,8 +6,13 @@
                 <h5 class="fw-bold mt-4" style="line-height: 10px">Daftar Koleksi Buku</h5>
                 <p class="text-muted">Tingkatkan literasi membacamu hari ini!</p>
 
-                <form class="d-flex align-items-center mb-3" role="search">
+                <form
+                    class="d-flex align-items-center mb-3"
+                    role="search"
+                    @submit.prevent="handleSubmit"
+                >
                     <input
+                        v-model="searchKeyword"
                         class="form-control me-2 rounded shadow-sm"
                         type="search"
                         placeholder="Cari buku, penulis, atau kategori..."
@@ -18,7 +23,18 @@
                     </button>
                 </form>
 
-                <ul class="nav nav-pills mb-4 gap-2 flex-wrap" id="category-tabs">
+                <div v-if="isSearching && books.length === 0" class="text-center text-muted my-5">
+                    <h4 class="fw-bold text-dark" style="line-height: 15px">
+                        Ups, buku tidak ditemukan
+                    </h4>
+                    <p class="text-muted">Silakan usulkan judul buku favorit Anda kepada kami.</p>
+                </div>
+
+                <ul
+                    v-if="books.length != 0"
+                    class="nav nav-pills mb-4 gap-2 flex-wrap"
+                    id="category-tabs"
+                >
                     <li class="nav-item" v-for="kategori in kategoriList" :key="kategori">
                         <button
                             class="nav-link bg-body shadow-sm text-muted rounded px-3 py-1 border-0"
@@ -65,7 +81,7 @@
                                     transition: background-color 0.3s ease;
                                 "
                             >
-                                {{ kategori.kategori }}
+                                {{ book.kategori.map((k) => k.kategori).join(', ') }}
                             </div>
 
                             <div
@@ -96,7 +112,7 @@
                     </div>
                 </div>
                 <div
-                    v-else
+                    v-else-if="books.length === 0 && isLoading"
                     class="d-flex flex-column align-items-center justify-content-center text-center p-5"
                 >
                     <div
@@ -112,7 +128,7 @@
                     <small class="text-muted">Mohon tunggu sebentar ya!</small>
                 </div>
 
-                <nav aria-label="Pagination" class="mt-4">
+                <nav v-if="books.length != 0" aria-label="Pagination" class="mt-4">
                     <ul class="pagination justify-content-center">
                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
                             <a href="#" class="page-link" @click.prevent="loadBuku(currentPage - 1)"
@@ -143,7 +159,6 @@
 </template>
 
 <script>
-import router from '@/router'
 import NavbarDewasa from '@/components/NavbarDewasa.vue'
 import Footer from '@/components/Footer.vue'
 import axios from 'axios'
@@ -164,6 +179,9 @@ export default {
             perPage: 10,
             selectedKategori: 'Semua',
             kategoriList: [],
+            searchKeyword: '',
+            isLoading: false,
+            isSearching: false,
         }
     },
     computed: {
@@ -178,51 +196,32 @@ export default {
         this.loadKategori()
     },
     methods: {
-        logout() {
-            axios
-                .get('http://127.0.0.1:8000/api/Auth/Logout', {
-                    headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-                })
-                .then(() => {
-                    sessionStorage.clear()
-                    router.push({ name: 'login' })
-                })
-                .catch((error) => {
-                    console.error('Logout Error:', error)
-                })
-        },
         loadBuku(page = 1) {
+            this.isLoading = true
+            const kategoriParam =
+                this.selectedKategori && this.selectedKategori.toLowerCase() !== 'semua'
+                    ? `&kategori=${this.selectedKategori}`
+                    : ''
+
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/Buku/KoleksiBuku?page=${page}&per_page=${this.perPage}`,
+                    `http://127.0.0.1:8000/api/Buku/KoleksiBuku?usia=dewasa&page=${page}&per_page=${this.perPage}${kategoriParam}`,
                     {
-                        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                        },
                     },
                 )
                 .then((response) => {
-                    let allBooks = response.data.data
-                    allBooks = allBooks.filter((book) => {
-                        return book.kategori.some((kategori) => {
-                            return kategori.usia.some((u) => u.nama.toLowerCase() === 'dewasa')
-                        })
-                    })
-
-                    if (this.selectedKategori !== 'Semua') {
-                        allBooks = allBooks.filter((book) =>
-                            book.kategori.some(
-                                (kategori) =>
-                                    kategori.kategori.toLowerCase() ===
-                                    this.selectedKategori.toLowerCase(),
-                            ),
-                        )
-                    }
-
-                    this.books = allBooks
+                    this.books = response.data.data
                     this.currentPage = response.data.current_page
                     this.lastPage = response.data.last_page
                 })
                 .catch((error) => {
                     console.error('Gagal memuat buku:', error)
+                })
+                .finally(() => {
+                    this.isLoading = false
                 })
         },
         loadKategori() {
@@ -247,6 +246,62 @@ export default {
         goToDetail(book) {
             sessionStorage.setItem('book_id', book.id)
             this.$router.push({ name: 'detailbukudewasa' })
+        },
+        handleSubmit() {
+            const keyword = this.searchKeyword.trim()
+
+            if (keyword === '') {
+                this.isSearching = false
+                this.books = []
+                this.currentPage = 1
+                this.lastPage = 1
+                this.loadBuku(1)
+            } else {
+                this.searchBooks()
+            }
+        },
+        searchBooks() {
+            this.isSearching = true
+            axios
+                .get(
+                    `http://127.0.0.1:8000/api/Buku/KoleksiBuku?usia=dewasa&per_page=${this.perPage}`,
+                    {
+                        headers: { Authorization: `Bearer ${this.token}` },
+                    },
+                )
+                .then((response) => {
+                    let allBooks = response.data.data
+
+                    allBooks = allBooks.filter((book) => {
+                        return book.kategori.some((kategori) =>
+                            kategori.usia.some((u) => u.nama.toLowerCase() === 'dewasa'),
+                        )
+                    })
+
+                    if (this.selectedKategori !== 'Semua') {
+                        allBooks = allBooks.filter((book) =>
+                            book.kategori.some(
+                                (kategori) =>
+                                    kategori.kategori.toLowerCase() ===
+                                    this.selectedKategori.toLowerCase(),
+                            ),
+                        )
+                    }
+
+                    if (this.searchKeyword.trim() !== '') {
+                        const keyword = this.searchKeyword.toLowerCase()
+                        allBooks = allBooks.filter((book) => {
+                            return book.judul.toLowerCase().includes(keyword)
+                        })
+                    }
+
+                    this.books = allBooks
+                    this.currentPage = 1
+                    this.lastPage = Math.ceil(allBooks.length / this.perPage)
+                })
+                .catch((error) => {
+                    console.error('Gagal mencari buku:', error)
+                })
         },
     },
 }

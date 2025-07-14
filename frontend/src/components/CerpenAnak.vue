@@ -81,8 +81,6 @@
 </template>
 
 <script>
-import { useCartStore } from '@/stores/cartStore'
-import { mapActions } from 'pinia'
 import defaultCover from '../../../frontend/src/assets/image/sapi.jpeg'
 
 export default {

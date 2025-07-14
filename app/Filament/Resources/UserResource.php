@@ -49,6 +49,7 @@ class UserResource extends Resource
                     ->options(Role::pluck('name', 'name'))
                     ->searchable()
                     ->required()
+                    ->dehydrated(false)
             ]);
     }
 
@@ -92,5 +93,23 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function afterCreate($record, array $data): void
+    {
+        $record->assignRole($data['role']);
+    }
+
+    public static function afterUpdate($record, array $data): void
+    {
+        $record->syncRoles([$data['role']]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'super_admin');
+            });
     }
 }

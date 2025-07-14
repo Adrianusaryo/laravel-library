@@ -15,7 +15,7 @@
                     <span class="badge bg-body-secondary text-dark fs-6 me-3">{{
                         event.kategori
                     }}</span>
-                    <h2 class="fw-bold mb-0 text-dark">{{ event.nama_acara }}</h2>
+                    <h4 class="fw-bold mb-0 text-dark">{{ event.nama_acara }}</h4>
                 </div>
 
                 <table class="table table-bordered mt-2 px-2">

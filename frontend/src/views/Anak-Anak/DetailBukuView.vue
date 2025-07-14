@@ -30,9 +30,12 @@ export default {
         this.name = sessionStorage.getItem('name')
         const bookId = sessionStorage.getItem('book_id')
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/Buku/KoleksiBuku', {
-                headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-            })
+            const response = await axios.get(
+                'http://127.0.0.1:8000/api/Buku/KoleksiBuku?per_page=1000',
+                {
+                    headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+                },
+            )
             const books = response.data.data
             this.book = books.find((b) => b.id.toString() === bookId.toString())
         } catch (err) {

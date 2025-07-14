@@ -12,7 +12,6 @@
                 />
             </div>
 
-            <!-- Informasi Buku -->
             <div class="col-md-8">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <h4 class="fw-bold mb-0" style="line-height: 15px">{{ book.judul }}</h4>
@@ -39,8 +38,8 @@
                         </tr>
                         <tr>
                             <td class="fw-bold">Subjek</td>
-                            <td v-for="kategori in book.kategori" :key="kategori.id">
-                                {{ kategori.kategori }}
+                            <td>
+                                {{ book.kategori.map((k) => k.kategori).join(', ') }}
                             </td>
                         </tr>
                         <tr>

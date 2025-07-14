@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 class CerpenController extends Controller
 {
 
-    public function LihatCerpen()
+    public function LihatCerpen(Request $request)
     {
-        $cerpen = Cerpen::where('status', 'Approved')->get();
+        $perPage = $request->input('per_page', 5);
+        $cerpen = Cerpen::where('status', 'Approved')->paginate($perPage);
 
         return response(['data' => $cerpen, 'status' => '200', 'messages' => 'Koleksi Cerpen Berhasil Ditampilkan']);
     }
