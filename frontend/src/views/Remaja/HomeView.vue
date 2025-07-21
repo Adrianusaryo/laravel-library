@@ -7,6 +7,30 @@
                 <p class="text-muted">Cari bacaan seru yang cocok sama mood kamu!</p>
 
                 <div
+                    v-if="isLoadingBuku"
+                    class="d-flex flex-column align-items-center justify-content-center text-center p-5"
+                >
+                    <div
+                        class="spinner-border text-dark mb-3"
+                        role="status"
+                        style="width: 3rem; height: 3rem"
+                    >
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-muted fw-semibold mb-0" style="font-size: 1.1rem">
+                        Sedang memuat data buku...
+                    </p>
+                    <small class="text-muted">Mohon tunggu sebentar ya!</small>
+                </div>
+
+                <div v-else-if="books.length === 0" class="text-center text-muted my-5">
+                    <h4 class="fw-bold text-dark" style="line-height: 15px">
+                        Ups, belum ada buku tersedia
+                    </h4>
+                    <p class="text-muted">Silakan usulkan judul buku favorit Anda kepada kami.</p>
+                </div>
+
+                <div
                     v-if="books.length"
                     class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3"
                 >
@@ -69,31 +93,44 @@
                         </div>
                     </div>
                 </div>
-                <div
-                    v-else
-                    class="d-flex flex-column align-items-center justify-content-center text-center p-5"
-                >
-                    <div
-                        class="spinner-border text-dark mb-3"
-                        role="status"
-                        style="width: 3rem; height: 3rem"
-                    >
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="text-muted fw-semibold mb-0" style="font-size: 1.1rem">
-                        Sedang memuat data buku...
-                    </p>
-                    <small class="text-muted">Mohon tunggu sebentar ya!</small>
-                </div>
 
                 <div>
                     <h5 class="fw-bold mt-4 text-dark" style="line-height: 10px">
                         Agenda Literasi
                     </h5>
                     <p class="text-muted">Yuk intip acara seru seputar buku dan kreativitas!</p>
+                    <div
+                        v-if="isLoadingAcara"
+                        class="d-flex flex-column align-items-center justify-content-center text-center p-5"
+                    >
+                        <div
+                            class="spinner-border text-dark mb-3"
+                            role="status"
+                            style="width: 3rem; height: 3rem"
+                        >
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="text-muted fw-semibold mb-0" style="font-size: 1.1rem">
+                            Sedang memuat data acara...
+                        </p>
+                        <small class="text-muted">Mohon tunggu sebentar ya!</small>
+                    </div>
+
+                    <div v-else-if="events.length === 0" class="text-center text-muted my-5">
+                        <h4 class="fw-bold text-dark" style="line-height: 15px">
+                            Ups, belum ada acara yang tersedia
+                        </h4>
+                        <p class="text-muted">
+                            Silakan cek kembali di lain waktu untuk info acara terbaru.
+                        </p>
+                    </div>
 
                     <div class="row g-4 mb-5" v-if="events.length">
-                        <div class="col-md-4" v-for="(event, index) in events" :key="index">
+                        <div
+                            class="col-md-4"
+                            v-for="(event, index) in events.slice(0, 3)"
+                            :key="index"
+                        >
                             <div
                                 class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden"
                                 style="transition: all 0.3s ease; cursor: pointer"
@@ -151,22 +188,6 @@
                             </div>
                         </div>
                     </div>
-                    <div
-                        v-else
-                        class="d-flex flex-column align-items-center justify-content-center text-center p-5"
-                    >
-                        <div
-                            class="spinner-border text-dark mb-3"
-                            role="status"
-                            style="width: 3rem; height: 3rem"
-                        >
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <p class="text-muted fw-semibold mb-0" style="font-size: 1.1rem">
-                            Sedang memuat data acara...
-                        </p>
-                        <small class="text-muted">Mohon tunggu sebentar ya!</small>
-                    </div>
                 </div>
             </div>
             <Footer />
@@ -192,10 +213,13 @@ export default {
             books: [],
             events: [],
             url: 'http://127.0.0.1:8000/storage/',
+            isLoadingBuku: false,
+            isLoadingAcara: false,
         }
     },
     methods: {
         loadBuku() {
+            this.isLoadingBuku = true
             axios
                 .get('http://127.0.0.1:8000/api/Buku/KoleksiBukuHome', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
@@ -207,14 +231,17 @@ export default {
                             return kategori.usia.some((u) => u.nama.toLowerCase() === 'remaja')
                         })
                     })
-
                     this.books = allBooks
                 })
                 .catch((error) => {
                     console.error(error)
                 })
+                .finally(() => {
+                    this.isLoadingBuku = false
+                })
         },
         loadAcara() {
+            this.isLoadingAcara = true
             axios
                 .get('http://127.0.0.1:8000/api/Acara/ListAcaraHome', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
@@ -226,6 +253,9 @@ export default {
                 })
                 .catch((error) => {
                     console.error('Gagal load acara:', error)
+                })
+                .finally(() => {
+                    this.isLoadingAcara = false
                 })
         },
         formatTanggal(tanggal) {

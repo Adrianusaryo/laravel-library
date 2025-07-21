@@ -137,7 +137,7 @@
 import axios from 'axios'
 import FooterRemaja from '@/components/FooterRemaja.vue'
 import NavbarAnak from '@/components/NavbarAnak.vue'
-import defaultCover from '../../../../frontend/src/assets/image/sapi.jpeg'
+import defaultCover from '../../../../frontend/src/assets/image/default.png'
 
 export default {
     components: {
@@ -153,7 +153,7 @@ export default {
             url: 'http://127.0.0.1:8000/storage/Cerpen/',
             currentPage: 1,
             lastPage: 1,
-            perPage: 1,
+            perPage: 10,
             searchKeyword: '',
             isLoading: false,
             isSearching: false,

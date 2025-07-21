@@ -1,76 +1,101 @@
 <template>
     <div class="d-flex">
-        <aside class="sidebar shadow vh-100 position-fixed">
-            <div class="p-4 border-bottom">
+        <aside :class="['sidebar', { 'is-expanded': isExpanded }]">
+            <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
                 <RouterLink
                     class="navbar-brand fs-5 fw-semibold d-flex align-items-center"
                     to="/Anak"
                 >
-                    <i class="fa fa-book-open me-2"></i> E-Library Kids
+                    <i class="fa fa-book-open me-2"></i>
+                    <span v-if="isExpanded">E-Library Kids</span>
                 </RouterLink>
+
+                <!-- Tombol toggle sidebar -->
+                <button class="btn btn-sm btn-toggle" @click="toggleSidebar">
+                    <i :class="isExpanded ? 'fa fa-chevron-left' : 'fa fa-bars'"></i>
+                </button>
             </div>
 
             <div class="scroll-wrapper">
                 <!-- Menu -->
                 <ul class="nav flex-column mt-3 px-2">
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak">
-                            <i class="fa fa-house-chimney me-2"></i> Home
+                        <RouterLink class="nav-link d-flex align-items-center" to="/Anak">
+                            <i class="fa fa-house-chimney me-2"></i>
+                            <span v-if="isExpanded">Home</span>
                         </RouterLink>
                     </li>
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak/Koleksi">
-                            <i class="fa fa-book-open-reader me-2"></i> Daftar Koleksi
+                        <RouterLink class="nav-link d-flex align-items-center" to="/Anak/Koleksi">
+                            <i class="fa fa-book-open-reader me-2"></i>
+                            <span v-if="isExpanded">Daftar Koleksi</span>
                         </RouterLink>
                     </li>
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak/Leaderboard">
-                            <i class="fa fa-star me-2"></i> Leaderboard
+                        <RouterLink
+                            class="nav-link d-flex align-items-center"
+                            to="/Anak/Leaderboard"
+                        >
+                            <i class="fa fa-star me-2"></i>
+                            <span v-if="isExpanded">Leaderboard</span>
                         </RouterLink>
                     </li>
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak/Keranjang">
-                            <i class="fa fa-gift me-2"></i> Keranjang
+                        <RouterLink class="nav-link d-flex align-items-center" to="/Anak/Keranjang">
+                            <i class="fa fa-gift me-2"></i>
+                            <span v-if="isExpanded">Keranjang</span>
                         </RouterLink>
                     </li>
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak/Acara">
-                            <i class="fa fa-face-smile me-2"></i> Acara
+                        <RouterLink class="nav-link d-flex align-items-center" to="/Anak/Acara">
+                            <i class="fa fa-face-smile me-2"></i>
+                            <span v-if="isExpanded">Acara</span>
                         </RouterLink>
                     </li>
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak/Transaksi">
-                            <i class="fa fa-rocket me-2"></i>Aktivitas
+                        <RouterLink class="nav-link d-flex align-items-center" to="/Anak/Transaksi">
+                            <i class="fa fa-rocket me-2"></i>
+                            <span v-if="isExpanded">Aktivitas</span>
                         </RouterLink>
                     </li>
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak/Cerpen">
-                            <i class="fa fa-wand-magic-sparkles me-2"></i>Cerpen
+                        <RouterLink class="nav-link d-flex align-items-center" to="/Anak/Cerpen">
+                            <i class="fa fa-wand-magic-sparkles me-2"></i>
+                            <span v-if="isExpanded">Cerpen</span>
                         </RouterLink>
                     </li>
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak/Kirim-Cerpen">
-                            <i class="fa fa-paper-plane me-2"></i>Kirim Cerpen
+                        <RouterLink
+                            class="nav-link d-flex align-items-center"
+                            to="/Anak/Kirim-Cerpen"
+                        >
+                            <i class="fa fa-paper-plane me-2"></i>
+                            <span v-if="isExpanded">Kirim Cerpen</span>
                         </RouterLink>
                     </li>
                     <li class="nav-item my-1">
-                        <RouterLink class="nav-link" to="/Anak/Profil">
-                            <i class="fa fa-child me-2"></i> {{ name }}
+                        <RouterLink class="nav-link d-flex align-items-center" to="/Anak/Profil">
+                            <i class="fa fa-child me-2"></i>
+                            <span v-if="isExpanded">{{ name }}</span>
                         </RouterLink>
                     </li>
                 </ul>
             </div>
 
-            <!-- User Profile -->
+            <!-- Tombol Logout -->
             <div class="mt-3 px-3 mb-2">
-                <button class="btn btn-dark w-100" @click="logout">
-                    <i class="fa fa-door-open me-2"></i> Logout
+                <button
+                    class="btn btn-dark w-100 d-flex align-items-center justify-content-center"
+                    @click="logout"
+                >
+                    <i class="fa fa-door-open me-2"></i>
+                    <span v-if="isExpanded">Logout</span>
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <div class="flex-grow-1" style="margin-left: 250px">
+        <!-- Konten -->
+        <div class="flex-grow-1" :style="{ marginLeft: isExpanded ? '250px' : '50px' }">
             <router-view />
         </div>
     </div>
@@ -82,7 +107,16 @@ import router from '@/router'
 
 export default {
     props: ['name'],
+    data() {
+        return {
+            isExpanded: localStorage.getItem('sidebar_expanded') === 'true',
+        }
+    },
     methods: {
+        toggleSidebar() {
+            this.isExpanded = !this.isExpanded
+            localStorage.setItem('sidebar_expanded', this.isExpanded)
+        },
         logout() {
             axios
                 .get('http://127.0.0.1:8000/api/Auth/Logout', {
@@ -92,9 +126,7 @@ export default {
                     sessionStorage.clear()
                     router.push({ name: 'login' })
                 })
-                .catch((error) => {
-                    console.error('Logout Error:', error)
-                })
+                .catch((err) => console.error('Logout error:', err))
         },
     },
 }
@@ -102,24 +134,22 @@ export default {
 
 <style scoped>
 .sidebar {
-    width: 250px;
-    min-height: 100vh;
+    width: 70px;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    position: fixed;
     overflow-y: hidden;
-    transition: all 0.3s ease-in-out;
+    height: 100vh;
+    overflow-y: auto;
     z-index: 1000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    scrollbar-width: thin;
-    scrollbar-gutter: stable;
-    scrollbar-color: #6f4e95 transparent;
+}
+
+.sidebar.is-expanded {
+    width: 250px;
 }
 
 .sidebar:hover {
     overflow-y: auto;
-}
-
-.sidebar::-webkit-scrollbar {
-    width: 8px;
 }
 
 .sidebar::-webkit-scrollbar-track {
@@ -132,17 +162,23 @@ export default {
     border: 2px solid #e9dff7;
 }
 
-.navbar-brand {
-    color: #6f4e95 !important;
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+    opacity: 0;
+    display: none;
+}
+
+.sidebar:hover::-webkit-scrollbar {
+    display: block;
 }
 
 .nav-link {
     color: #6f4e95;
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease;
     border-radius: 20px;
-    padding: 8px 12px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nav-link:hover {
@@ -150,9 +186,23 @@ export default {
     color: #4b2991;
 }
 
+.navbar-brand {
+    color: #6f4e95;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .btn-dark {
     background-color: #6f4e95 !important;
-    border: 2px solid #b39ddb !important;
-    color: #fff;
+    border: none;
+    color: white;
+}
+
+.btn-toggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #6f4e95;
 }
 </style>

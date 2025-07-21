@@ -120,7 +120,6 @@ export default {
                     sessionStorage.setItem('token', response.data.data.token)
                     sessionStorage.setItem('tanggal_lahir', response.data.data.tanggal_lahir)
 
-                    // Hitung Usia
                     const today = new Date()
                     const birthDate = new Date(response.data.data.tanggal_lahir)
                     let age = today.getFullYear() - birthDate.getFullYear()
@@ -132,7 +131,7 @@ export default {
                         age--
                     }
 
-                    if (age >= 6 && age <= 12) {
+                    if (age >= 2 && age <= 12) {
                         router.push({ name: 'anak-anak' })
                     } else if (age >= 13 && age <= 21) {
                         router.push({ name: 'remaja' })

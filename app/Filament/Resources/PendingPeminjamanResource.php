@@ -89,7 +89,8 @@ class PendingPeminjamanResource extends Resource
                         $html .= '</ul>';
                         return new HtmlString($html);
                     })
-                    ->modalButton('Tutup'),
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Tutup'),
                 Action::make('borrowed')->label('Status Dipinjam')->color('success')->icon('heroicon-o-check')->action(function ($record) {
                     $record->update(['status' => 'Dipinjam']);
 

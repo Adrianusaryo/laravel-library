@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import defaultCover from '../../../frontend/src/assets/image/sapi.jpeg'
+import defaultCover from '../../../frontend/src/assets/image/default.png'
 
 export default {
     props: {

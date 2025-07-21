@@ -4,15 +4,17 @@
         <div class="flex-grow-1 px-4">
             <div class="container">
                 <h5 class="fw-bold mt-4 text-dark" style="line-height: 10px">Leaderboard</h5>
-                <p class="text-muted">Peringkat pengguna berdasarkan aktivitas.</p>
+                <p class="text-muted">
+                    Peringkat pengguna berdasarkan aktivitas peminjaman buku terbanyak.
+                </p>
                 <div
                     class="alert alert-warning py-2 px-3 mb-4"
                     role="alert"
                     style="font-size: 14px"
                 >
                     <i class="fas fa-info-circle me-2"></i>
-                    Pinjam buku, kumpulkan <strong>10 poin</strong> tiap transaksi. 3 peringkat
-                    teratas akan mendapat hadiah menarik!.
+                    Ayo pinjam buku, kumpulkan 10 poin tiap transaksi, dan raih kesempatan
+                    memenangkan hadiah menarik sebagai 3 peringkat teratas bulanan!
                 </div>
 
                 <LeaderboardChartsAnak :leaderboardUsers="leaderboardUsers" />

@@ -229,11 +229,38 @@ export default {
                 .get('http://127.0.0.1:8000/api/Buku/DaftarKategori', {
                     headers: { Authorization: `Bearer ${this.token}` },
                 })
-                .then((response) => {
-                    const kategoriData = response.data.data
-                        .filter((k) => k.usia.some((u) => u.nama.toLowerCase() === 'anak-anak'))
-                        .map((k) => k.kategori)
-                    this.kategoriList = ['Semua', ...kategoriData]
+                .then((responseKategori) => {
+                    const allKategori = responseKategori.data.data.filter((k) =>
+                        k.usia.some((u) => u.nama.toLowerCase() === 'anak-anak'),
+                    )
+
+                    axios
+                        .get(
+                            `http://127.0.0.1:8000/api/Buku/KoleksiBuku?usia=anak-anak&per_page=${this.perPage}`,
+                            {
+                                headers: { Authorization: `Bearer ${this.token}` },
+                            },
+                        )
+                        .then((responseBuku) => {
+                            const bukuAnak = responseBuku.data.data
+
+                            const kategoriWithBooks = allKategori.filter((kategoriItem) => {
+                                const kategoriName = kategoriItem.kategori.toLowerCase()
+                                return bukuAnak.some((book) =>
+                                    book.kategori.some(
+                                        (k) => k.kategori.toLowerCase() === kategoriName,
+                                    ),
+                                )
+                            })
+
+                            this.kategoriList = [
+                                'Semua',
+                                ...kategoriWithBooks.map((k) => k.kategori),
+                            ]
+                        })
+                        .catch((error) => {
+                            console.error('Gagal memuat buku untuk validasi kategori:', error)
+                        })
                 })
                 .catch((error) => {
                     console.error('Gagal memuat kategori:', error)

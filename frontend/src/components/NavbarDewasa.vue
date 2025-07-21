@@ -1,70 +1,110 @@
 <template>
     <div class="d-flex">
-        <!-- Sidebar -->
-        <aside class="sidebar bg-white shadow vh-100 position-fixed">
-            <div class="p-4 border-bottom">
+        <aside :class="['sidebar', { 'is-expanded': isExpanded }]">
+            <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
                 <RouterLink
-                    class="navbar-brand text-dark fs-5 fw-semibold d-flex align-items-center"
+                    class="navbar-brand fs-5 fw-semibold d-flex align-items-center"
                     to="/Dewasa"
                 >
-                    <i class="fa fa-book-open me-2"></i> E-Library Adult
+                    <i class="fa fa-book-open me-2"></i>
+                    <span v-if="isExpanded">E-Library Adult</span>
                 </RouterLink>
+
+                <button class="btn btn-sm btn-toggle" @click="toggleSidebar">
+                    <i :class="isExpanded ? 'fa fa-chevron-left' : 'fa fa-bars'"></i>
+                </button>
             </div>
 
-            <!-- Menu -->
-            <ul class="nav flex-column mt-3 px-2">
-                <li class="nav-item my-1">
-                    <RouterLink class="nav-link text-dark text-muted" to="/Dewasa">
-                        <i class="fa fa-home me-2"></i> Home
-                    </RouterLink>
-                </li>
-                <li class="nav-item my-1">
-                    <RouterLink class="nav-link text-dark text-muted" to="/Dewasa/Koleksi">
-                        <i class="fa fa-book me-2"></i> Daftar Koleksi
-                    </RouterLink>
-                </li>
-                <li class="nav-item my-1">
-                    <RouterLink class="nav-link text-dark text-muted" to="/Dewasa/Leaderboard">
-                        <i class="fa fa-trophy me-2"></i> Leaderboard
-                    </RouterLink>
-                </li>
-                <li class="nav-item my-1">
-                    <RouterLink class="nav-link text-dark text-muted" to="/Dewasa/Keranjang">
-                        <i class="fa fa-bag-shopping me-2"></i> Keranjang
-                    </RouterLink>
-                </li>
-                <li class="nav-item my-1">
-                    <RouterLink class="nav-link text-dark text-muted" to="/Dewasa/Acara">
-                        <i class="fa fa-calendar me-2"></i> Acara
-                    </RouterLink>
-                </li>
-                <li class="nav-item my-1">
-                    <RouterLink class="nav-link text-dark text-muted" to="/Dewasa/Aktivitas">
-                        <i class="fa fa-repeat me-2"></i>Aktivitas
-                    </RouterLink>
-                </li>
-                <li class="nav-item my-1">
-                    <RouterLink class="nav-link text-dark text-muted" to="/Dewasa/Usul-Buku">
-                        <i class="fa fa-download me-2"></i>Usul Buku
-                    </RouterLink>
-                </li>
-                <li class="nav-item my-1">
-                    <RouterLink class="nav-link text-dark text-muted" to="/Dewasa/Profil">
-                        <i class="fa fa-user-secret me-2"></i> {{ name }}
-                    </RouterLink>
-                </li>
-            </ul>
+            <div class="scroll-wrapper">
+                <ul class="nav flex-column mt-3 px-2">
+                    <li class="nav-item my-1">
+                        <RouterLink
+                            class="nav-link text-muted d-flex align-items-center"
+                            to="/Dewasa"
+                        >
+                            <i class="fa fa-home me-2"></i>
+                            <span v-if="isExpanded">Home</span>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item my-1">
+                        <RouterLink
+                            class="nav-link text-muted d-flex align-items-center"
+                            to="/Dewasa/Koleksi"
+                        >
+                            <i class="fa fa-book me-2"></i>
+                            <span v-if="isExpanded">Daftar Koleksi</span>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item my-1">
+                        <RouterLink
+                            class="nav-link text-muted d-flex align-items-center"
+                            to="/Dewasa/Leaderboard"
+                        >
+                            <i class="fa fa-trophy me-2"></i>
+                            <span v-if="isExpanded">Leaderboard</span>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item my-1">
+                        <RouterLink
+                            class="nav-link d-flex text-muted align-items-center"
+                            to="/Dewasa/Keranjang"
+                        >
+                            <i class="fa fa-bag-shopping me-2"></i>
+                            <span v-if="isExpanded">Keranjang</span>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item my-1">
+                        <RouterLink
+                            class="nav-link text-muted d-flex align-items-center"
+                            to="/Dewasa/Acara"
+                        >
+                            <i class="fa fa-calendar me-2"></i>
+                            <span v-if="isExpanded">Acara</span>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item my-1">
+                        <RouterLink
+                            class="nav-link text-muted d-flex align-items-center"
+                            to="/Dewasa/Aktivitas"
+                        >
+                            <i class="fa fa-repeat me-2"></i>
+                            <span v-if="isExpanded" class="text-dark">Aktivitas</span>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item my-1">
+                        <RouterLink
+                            class="nav-link text-muted d-flex align-items-center"
+                            to="/Dewasa/Usul-Buku"
+                        >
+                            <i class="fa fa-download me-2"></i>
+                            <span v-if="isExpanded">Usul Buku</span>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item my-1">
+                        <RouterLink
+                            class="nav-link text-muted d-flex align-items-center"
+                            to="/Dewasa/Profil"
+                        >
+                            <i class="fa fa-user-secret me-2"></i>
+                            <span v-if="isExpanded">{{ name }}</span>
+                        </RouterLink>
+                    </li>
+                </ul>
+            </div>
 
-            <!-- User Profile -->
             <div class="mt-3 px-3 mb-2">
-                <button class="btn btn-dark w-100" @click="logout">
-                    <i class="fa fa-sign-out-alt me-2"></i> Logout
+                <button
+                    class="btn btn-dark w-100 d-flex align-items-center justify-content-center"
+                    @click="logout"
+                >
+                    <i class="fa fa-door-open me-2"></i>
+                    <span v-if="isExpanded">Logout</span>
                 </button>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <div class="flex-grow-1" style="margin-left: 250px">
+        <!-- Konten -->
+        <div class="flex-grow-1" :style="{ marginLeft: isExpanded ? '250px' : '50px' }">
             <router-view />
         </div>
     </div>
@@ -76,7 +116,16 @@ import router from '@/router'
 
 export default {
     props: ['name'],
+    data() {
+        return {
+            isExpanded: localStorage.getItem('sidebar_expanded') === 'true',
+        }
+    },
     methods: {
+        toggleSidebar() {
+            this.isExpanded = !this.isExpanded
+            localStorage.setItem('sidebar_expanded', this.isExpanded)
+        },
         logout() {
             axios
                 .get('http://127.0.0.1:8000/api/Auth/Logout', {
@@ -96,15 +145,45 @@ export default {
 
 <style scoped>
 .sidebar {
-    width: 250px;
-    min-height: 100vh;
-    transition: all 0.3s;
+    width: 70px;
+    transition: all 0.3s ease;
+    background-color: #f4f6f9;
+    position: fixed;
+    height: 100vh;
     z-index: 1000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Lebih tegas dari shadow-sm */
+}
+
+.sidebar.is-expanded {
+    width: 250px;
+}
+
+.nav-link {
+    color: #6c757d;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nav-link:hover {
-    background-color: #f8f9fa;
-    border-radius: 5px;
+    background-color: #e8ecf1;
+    color: #6c757d;
+    border-radius: 20px;
+}
+
+.navbar-brand {
+    /* color: #344767; */
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-toggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #344767;
 }
 </style>

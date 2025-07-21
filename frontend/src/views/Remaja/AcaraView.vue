@@ -6,8 +6,13 @@
                 <h5 class="fw-bold mt-4 text-dark" style="line-height: 10px">Acara</h5>
                 <p class="text-muted">Temukan beragam event menarik kami!</p>
 
-                <form class="d-flex align-items-center mb-4" role="search">
+                <form
+                    class="d-flex align-items-center mb-4"
+                    role="search"
+                    @submit.prevent="handleSubmit"
+                >
                     <input
+                        v-model="searchKeyword"
                         class="form-control me-2 rounded shadow-sm"
                         type="search"
                         placeholder="Cari buku, penulis, atau kategori..."
@@ -17,6 +22,13 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </form>
+
+                <div v-if="isSearching && events.length === 0" class="text-center text-muted my-5">
+                    <h4 class="fw-bold text-dark" style="line-height: 15px">
+                        Ups, acara tidak ditemukan
+                    </h4>
+                    <p class="text-muted">Silakan lihat acara yang lain.</p>
+                </div>
 
                 <div class="row g-4 mb-5" v-if="events.length">
                     <div class="col-md-4" v-for="(event, index) in events" :key="index">
@@ -83,7 +95,7 @@
                     </div>
                 </div>
                 <div
-                    v-else
+                    v-else-if="events.length === 0 && isLoading"
                     class="d-flex flex-column align-items-center justify-content-center text-center p-5"
                 >
                     <div
@@ -98,13 +110,43 @@
                     </p>
                     <small class="text-muted">Mohon tunggu sebentar ya!</small>
                 </div>
+
+                <nav v-if="events.length != 0" aria-label="Pagination" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                            <a
+                                href="#"
+                                class="page-link"
+                                @click.prevent="loadEvents(currentPage - 1)"
+                                >&laquo;</a
+                            >
+                        </li>
+                        <li
+                            class="page-item"
+                            v-for="page in totalPages"
+                            :key="page"
+                            :class="{ active: currentPage === page }"
+                        >
+                            <a href="#" class="page-link" @click.prevent="loadEvents(page)">{{
+                                page
+                            }}</a>
+                        </li>
+                        <li class="page-item" :class="{ disabled: currentPage === lastPage }">
+                            <a
+                                href="#"
+                                class="page-link"
+                                @click.prevent="loadEvents(currentPage + 1)"
+                                >&raquo;</a
+                            >
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <FooterRemaja />
         </div>
     </div>
 </template>
 <script>
-import router from '@/router'
 import axios from 'axios'
 import NavbarRemaja from '@/components/NavbarRemaja.vue'
 import FooterRemaja from '@/components/FooterRemaja.vue'
@@ -120,7 +162,18 @@ export default {
             token: '',
             events: [],
             url: 'http://127.0.0.1:8000/storage/',
+            currentPage: 1,
+            lastPage: 1,
+            perPage: 6,
+            searchKeyword: '',
+            isLoading: false,
+            isSearching: false,
         }
+    },
+    computed: {
+        totalPages() {
+            return Array.from({ length: this.lastPage }, (_, i) => i + 1)
+        },
     },
     mounted() {
         this.token = sessionStorage.getItem('token')
@@ -128,18 +181,25 @@ export default {
         this.loadEvents()
     },
     methods: {
-        loadEvents() {
+        loadEvents(page = 1) {
+            this.isLoading = true
             axios
-                .get('http://127.0.0.1:8000/api/Acara/ListAcara', {
-                    headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-                })
+                .get(
+                    `http://127.0.0.1:8000/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=remaja`,
+                    {
+                        headers: { Authorization: `Bearer ${this.token}` },
+                    },
+                )
                 .then((response) => {
-                    this.events = response.data.filter((event) => {
-                        return event.usia.some((u) => u.nama.toLowerCase() === 'remaja')
-                    })
+                    this.events = response.data.data
+                    this.currentPage = response.data.current_page
+                    this.lastPage = response.data.last_page
                 })
                 .catch((error) => {
                     console.error('Gagal load acara:', error)
+                })
+                .finally(() => {
+                    this.isLoading = false
                 })
         },
         formatTanggal(tanggal) {
@@ -178,6 +238,47 @@ export default {
             sessionStorage.setItem('event_id', event.id)
             this.$router.push({ name: 'detailacararemaja' })
         },
+        handleSubmit() {
+            const keyword = this.searchKeyword.trim()
+
+            if (keyword === '') {
+                this.isSearching = false
+                this.events = []
+                this.currentPage = 1
+                this.lastPage = 1
+                this.loadEvents(1)
+            } else {
+                this.searchEvents()
+            }
+        },
+        searchEvents(page = 1) {
+            this.isSearching = true
+
+            axios
+                .get(
+                    `http://127.0.0.1:8000/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=remaja`,
+                    {
+                        headers: { Authorization: `Bearer ${this.token}` },
+                    },
+                )
+                .then((response) => {
+                    let filteredEvents = response.data.data
+
+                    if (this.searchKeyword.trim() !== '') {
+                        const keyword = this.searchKeyword.toLowerCase()
+                        filteredEvents = filteredEvents.filter((event) =>
+                            event.nama_acara.toLowerCase().includes(keyword),
+                        )
+                    }
+
+                    this.events = filteredEvents
+                    this.currentPage = response.data.current_page
+                    this.lastPage = response.data.last_page
+                })
+                .catch((error) => {
+                    console.error('Gagal mencari acara:', error)
+                })
+        },
     },
 }
 </script>
@@ -193,6 +294,14 @@ export default {
 
 .btn-dark {
     background-color: #344767 !important;
+}
+
+.active > .page-link,
+.page-link.active {
+    z-index: 3;
+    color: white;
+    background-color: #344767;
+    border-color: #344767;
 }
 
 .form-control:focus {

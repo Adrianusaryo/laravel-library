@@ -2,18 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CerpenResource\Pages;
-use App\Filament\Resources\CerpenResource\RelationManagers;
-use App\Models\Cerpen;
-use Filament\Tables\Actions\Action;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
+use App\Models\Cerpen;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\CerpenResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CerpenResource\RelationManagers;
 
 class CerpenResource extends Resource
 {
@@ -52,6 +53,18 @@ class CerpenResource extends Resource
                     'success' => 'Approved',
                     'danger' => 'Rejected'
                 ]),
+                ImageColumn::make('poster')
+                    ->label('Cover Cerpen')
+                    ->width(60)
+                    ->height(80)
+                    ->getStateUsing(function ($record) {
+                        $path = public_path('storage/Cerpen/' . $record->poster);
+                        if (!empty($record->poster) && file_exists($path)) {
+                            return asset('storage/Cerpen/' . $record->poster);
+                        } else {
+                            return asset('images/default.png');
+                        }
+                    }),
             ])
             ->filters([
                 //
@@ -72,7 +85,6 @@ class CerpenResource extends Resource
                     ->modalDescription(fn($record) => strip_tags($record->isi))
                     ->modalSubmitAction(false)
                     ->modalCancelActionLabel('Tutup'),
-
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

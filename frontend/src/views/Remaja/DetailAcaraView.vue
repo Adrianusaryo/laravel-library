@@ -11,7 +11,6 @@
 <script>
 import axios from 'axios'
 import NavbarRemaja from '@/components/NavbarRemaja.vue'
-import FooterRemaja from '@/components/FooterRemaja.vue'
 import AcaraRemaja from '@/components/AcaraRemaja.vue'
 
 export default {

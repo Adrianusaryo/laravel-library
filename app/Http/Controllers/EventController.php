@@ -36,11 +36,22 @@ class EventController extends Controller
         return response(['data' => $data, 'status' => 200, 'message' => 'data berhasil ditampilkan']);
     }
 
-    public function LihatAcara()
+    public function LihatAcara(Request $request)
     {
-        $acara = Acara::with('usia')->get();
+        $perPage = $request->input('per_page', 5);
+        $usia = $request->input('usia'); // contoh: remaja
 
-        $data = $acara->map(function ($acara) {
+        $query = Acara::with('usia');
+
+        if ($usia) {
+            $query->whereHas('usia', function ($q) use ($usia) {
+                $q->where('nama', $usia);
+            });
+        }
+
+        $acara = $query->paginate($perPage);
+
+        $data = $acara->getCollection()->map(function ($acara) {
             return [
                 'id' => $acara->id,
                 'narasumber' => $acara->narasumber,
@@ -62,6 +73,14 @@ class EventController extends Controller
             ];
         });
 
-        return response()->json($data);
+        return response([
+            'data' => $data,
+            'current_page' => $acara->currentPage(),
+            'last_page' => $acara->lastPage(),
+            'per_page' => $acara->perPage(),
+            'total' => $acara->total(),
+            'status' => '200',
+            'message' => 'Data Acara Berhasil Ditampilkan'
+        ]);
     }
 }

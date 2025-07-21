@@ -199,7 +199,7 @@
 <script>
 import NavbarAnak from '@/components/NavbarAnak.vue'
 import axios from 'axios'
-import defaultCover from '../../../src/assets/image/sapi.jpeg'
+import defaultCover from '../../../src/assets/image/default.png'
 
 export default {
     components: {
