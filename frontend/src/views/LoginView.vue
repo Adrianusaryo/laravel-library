@@ -110,7 +110,7 @@ export default {
     methods: {
         login() {
             axios
-                .post('http://127.0.0.1:8000/api/Auth/Login', {
+                .post('https://laravel-library-production.up.railway.app/api/Auth/Login', {
                     email: this.email,
                     password: this.password,
                 })

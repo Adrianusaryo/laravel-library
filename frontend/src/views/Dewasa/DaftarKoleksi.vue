@@ -205,7 +205,7 @@ export default {
 
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/Buku/KoleksiBuku?usia=dewasa&page=${page}&per_page=${this.perPage}${kategoriParam}`,
+                    `https://laravel-library-production.up.railway.app/api/Buku/KoleksiBuku?usia=dewasa&page=${page}&per_page=${this.perPage}${kategoriParam}`,
                     {
                         headers: {
                             Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -226,7 +226,7 @@ export default {
         },
         loadKategori() {
             axios
-                .get('http://127.0.0.1:8000/api/Buku/DaftarKategori', {
+                .get('https://laravel-library-production.up.railway.app/api/Buku/DaftarKategori', {
                     headers: { Authorization: `Bearer ${this.token}` },
                 })
                 .then((responseKategori) => {
@@ -236,7 +236,7 @@ export default {
 
                     axios
                         .get(
-                            `http://127.0.0.1:8000/api/Buku/KoleksiBuku?usia=dewasa&per_page=${this.perPage}`,
+                            `https://laravel-library-production.up.railway.app/api/Buku/KoleksiBuku?usia=dewasa&per_page=${this.perPage}`,
                             {
                                 headers: { Authorization: `Bearer ${this.token}` },
                             },
@@ -292,7 +292,7 @@ export default {
             this.isSearching = true
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/Buku/KoleksiBuku?usia=dewasa&per_page=${this.perPage}`,
+                    `https://laravel-library-production.up.railway.app/api/Buku/KoleksiBuku?usia=dewasa&per_page=${this.perPage}`,
                     {
                         headers: { Authorization: `Bearer ${this.token}` },
                     },
