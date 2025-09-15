@@ -73,7 +73,7 @@
 export default {
     data() {
         return {
-            url: 'http://127.0.0.1:8000/storage/',
+            url: 'https://laravel-library-production.up.railway.app/storage/',
         }
     },
     props: {

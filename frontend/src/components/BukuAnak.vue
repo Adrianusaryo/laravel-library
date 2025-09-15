@@ -146,7 +146,7 @@ export default {
     data() {
         return {
             reviewText: '',
-            url: 'http://127.0.0.1:8000/storage/',
+            url: 'https://laravel-library-production.up.railway.app/storage/',
             cart: null,
             reviewsLocal: [],
         }
@@ -169,7 +169,7 @@ export default {
         async fetchReviews() {
             try {
                 const response = await fetch(
-                    `http://127.0.0.1:8000/api/Buku/LihatUlasanBuku/${this.book.id}`,
+                    `https://laravel-library-production.up.railway.app/api/Buku/LihatUlasanBuku/${this.book.id}`,
                     {
                         headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                     },
@@ -196,7 +196,7 @@ export default {
             }
 
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/Buku/UlasanBuku`, {
+                const response = await fetch(`https://laravel-library-production.up.railway.app/api/Buku/UlasanBuku`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
