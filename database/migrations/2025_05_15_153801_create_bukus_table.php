@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('isbn');
             $table->string('bahasa');
             $table->text('deskripsi');
-            $table->string('cover_buku');
+            $table->string('cover_buku')->nullable();
             $table->enum('status', ['Tersedia', 'Tidak Tersedia'])->default('Tersedia');
             $table->timestamps();
         });
