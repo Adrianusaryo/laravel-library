@@ -174,7 +174,7 @@ export default {
             this.isLoading = true
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/Cerpen/LihatCerpen?page=${page}&per_page=${this.perPage}`,
+                    `https://laravel-library-production.up.railway.app/api/Cerpen/LihatCerpen?page=${page}&per_page=${this.perPage}`,
                     {
                         headers: {
                             Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -212,11 +212,14 @@ export default {
         searchCerpen() {
             this.isSearching = true
             axios
-                .get(`http://127.0.0.1:8000/api/Cerpen/LihatCerpen?per_page=${this.perPage}`, {
-                    headers: {
-                        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                .get(
+                    `https://laravel-library-production.up.railway.app/api/Cerpen/LihatCerpen?per_page=${this.perPage}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                        },
                     },
-                })
+                )
                 .then((response) => {
                     let allCerpen = response.data.data.data
 

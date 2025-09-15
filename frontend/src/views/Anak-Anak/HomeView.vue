@@ -224,7 +224,7 @@ export default {
         loadBuku() {
             this.isLoadingBuku = true
             axios
-                .get('http://127.0.0.1:8000/api/Buku/KoleksiBukuHome', {
+                .get('https://laravel-library-production.up.railway.app/api/Buku/KoleksiBukuHome', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -246,7 +246,7 @@ export default {
         loadAcara() {
             this.isLoadingAcara = true
             axios
-                .get('http://127.0.0.1:8000/api/Acara/ListAcaraHome', {
+                .get('https://laravel-library-production.up.railway.app/api/Acara/ListAcaraHome', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {

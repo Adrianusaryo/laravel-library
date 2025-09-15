@@ -30,9 +30,12 @@ export default {
         this.name = sessionStorage.getItem('name')
         const cerpenId = sessionStorage.getItem('cerpen_id')
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/Cerpen/LihatCerpen', {
-                headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-            })
+            const response = await axios.get(
+                'https://laravel-library-production.up.railway.app/api/Cerpen/LihatCerpen',
+                {
+                    headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+                },
+            )
             const cerpens = response.data.data.data
             this.cerpen = cerpens.find((b) => b.id.toString() === cerpenId.toString())
         } catch (err) {

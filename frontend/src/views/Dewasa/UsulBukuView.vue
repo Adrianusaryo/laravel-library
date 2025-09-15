@@ -177,7 +177,7 @@ export default {
         getUsulanBuku() {
             this.loadingUsulan = true
             axios
-                .get('http://127.0.0.1:8000/api/Buku/LihatUsulBuku', {
+                .get('https://laravel-library-production.up.railway.app/api/Buku/LihatUsulBuku', {
                     headers: { Authorization: `Bearer ${this.token}` },
                 })
                 .then((response) => {
@@ -198,7 +198,7 @@ export default {
             this.loadingSubmit = true
             axios
                 .post(
-                    'http://127.0.0.1:8000/api/Buku/UsulBuku',
+                    'https://laravel-library-production.up.railway.app/api/Buku/UsulBuku',
                     {
                         judul: this.judul,
                         penerbit: this.penerbit,

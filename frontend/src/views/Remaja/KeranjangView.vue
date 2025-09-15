@@ -56,7 +56,7 @@ export default {
     data() {
         return {
             name: '',
-            url: 'http://127.0.0.1:8000/storage/',
+            url: 'https://laravel-library-production.up.railway.app/storage/',
             cart: useCartStore(),
         }
     },
@@ -77,7 +77,7 @@ export default {
 
             try {
                 const response = await axios.post(
-                    'http://127.0.0.1:8000/api/Peminjaman/PinjamBuku',
+                    'https://laravel-library-production.up.railway.app/api/Peminjaman/PinjamBuku',
                     { buku_id: bukuId },
                     {
                         headers: {

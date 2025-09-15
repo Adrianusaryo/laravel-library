@@ -185,7 +185,7 @@ export default {
             this.isLoading = true
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=anak-anak`,
+                    `https://laravel-library-production.up.railway.app/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=anak-anak`,
                     {
                         headers: { Authorization: `Bearer ${this.token}` },
                     },
@@ -256,7 +256,7 @@ export default {
 
             axios
                 .get(
-                    `http://127.0.0.1:8000/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=anak-anak`,
+                    `https://laravel-library-production.up.railway.app/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=anak-anak`,
                     {
                         headers: { Authorization: `Bearer ${this.token}` },
                     },

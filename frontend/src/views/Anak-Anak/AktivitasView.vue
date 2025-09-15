@@ -167,16 +167,19 @@ export default {
             token: '',
             peminjamanAktif: [],
             peminjamanSelesai: [],
-            isLoading: true, // loading state
+            isLoading: true,
         }
     },
     mounted() {
         this.token = sessionStorage.getItem('token')
         this.name = sessionStorage.getItem('name')
         axios
-            .get('http://127.0.0.1:8000/api/Peminjaman/LihatPeminjamanBuku', {
-                headers: { Authorization: `Bearer ${this.token}` },
-            })
+            .get(
+                'https://laravel-library-production.up.railway.app/api/Peminjaman/LihatPeminjamanBuku',
+                {
+                    headers: { Authorization: `Bearer ${this.token}` },
+                },
+            )
             .then((response) => {
                 const peminjaman = response.data.data
                 const options = { year: 'numeric', month: 'long', day: 'numeric' }

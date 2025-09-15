@@ -232,9 +232,12 @@ export default {
         getKirimCerpen() {
             this.loadingCerpen = true
             axios
-                .get('http://127.0.0.1:8000/api/Cerpen/LihatRiwayatPengiriman', {
-                    headers: { Authorization: `Bearer ${this.token}` },
-                })
+                .get(
+                    'https://laravel-library-production.up.railway.app/api/Cerpen/LihatRiwayatPengiriman',
+                    {
+                        headers: { Authorization: `Bearer ${this.token}` },
+                    },
+                )
                 .then((response) => {
                     this.KirimCerpen = response.data.data.sort((a, b) => {
                         if (a.status === 'Pending' && b.status !== 'Pending') return -1
@@ -257,12 +260,16 @@ export default {
             formData.append('isi', this.isi)
             formData.append('poster', this.poster)
             axios
-                .post('http://127.0.0.1:8000/api/Cerpen/KirimCerpen', formData, {
-                    headers: {
-                        Authorization: `Bearer ${this.token}`,
-                        'Content-Type': 'multipart/form-data',
+                .post(
+                    'https://laravel-library-production.up.railway.app/api/Cerpen/KirimCerpen',
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${this.token}`,
+                            'Content-Type': 'multipart/form-data',
+                        },
                     },
-                })
+                )
                 .then((response) => {
                     this.successMessage = response.data.message || 'Usulan buku berhasil dikirim!'
                     this.judul = ''

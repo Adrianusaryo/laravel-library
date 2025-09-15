@@ -32,9 +32,12 @@ export default {
         this.name = sessionStorage.getItem('name')
         const acaraId = sessionStorage.getItem('event_id')
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/Acara/ListAcara', {
-                headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-            })
+            const response = await axios.get(
+                'https://laravel-library-production.up.railway.app/api/Acara/ListAcara',
+                {
+                    headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+                },
+            )
             const events = response.data.data || response.data
             this.event = events.find((e) => e.id.toString() === acaraId.toString())
         } catch (err) {

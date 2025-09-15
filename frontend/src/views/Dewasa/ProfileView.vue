@@ -167,7 +167,7 @@ export default {
     methods: {
         fetchUserData() {
             axios
-                .get('http://127.0.0.1:8000/api/Auth/Profile', {
+                .get('https://laravel-library-production.up.railway.app/api/Auth/Profile', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -190,7 +190,7 @@ export default {
             this.errors = {}
 
             axios
-                .put('http://127.0.0.1:8000/api/Auth/ProfileUpdate', this.biodata, {
+                .put('https://laravel-library-production.up.railway.app/api/Auth/ProfileUpdate', this.biodata, {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
