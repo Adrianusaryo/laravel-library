@@ -173,7 +173,7 @@ export default {
             name: '',
             token: '',
             books: [],
-            url: 'https://laravel-library-production.up.railway.app/storage/',
+            url: 'https://e-library.up.railway.app/storage/',
             currentPage: 1,
             lastPage: 1,
             perPage: 10,
