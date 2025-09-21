@@ -97,7 +97,7 @@ export default {
     data() {
         return {
             reviewText: '',
-            url: 'https://laravel-library-production.up.railway.app/storage/Cerpen/',
+            url: 'https://e-library.up.railway.app/storage/Cerpen/',
             defaultCover,
             reviewsLocal: [],
         }
@@ -113,7 +113,7 @@ export default {
         async fetchReviews() {
             try {
                 const response = await fetch(
-                    `https://laravel-library-production.up.railway.app/api/Cerpen/LihatUlasanCerpen/${this.cerpen.id}`,
+                    `https://e-library.up.railway.app/api/Cerpen/LihatUlasanCerpen/${this.cerpen.id}`,
                     {
                         headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                     },
@@ -140,17 +140,20 @@ export default {
             }
 
             try {
-                const response = await fetch(`https://laravel-library-production.up.railway.app/api/Cerpen/UlasanCerpen`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                const response = await fetch(
+                    `https://laravel-library-production.up.railway.app/api/Cerpen/UlasanCerpen`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                        },
+                        body: JSON.stringify({
+                            cerpen_id: this.cerpen.id,
+                            comment: this.reviewText.trim(),
+                        }),
                     },
-                    body: JSON.stringify({
-                        cerpen_id: this.cerpen.id,
-                        comment: this.reviewText.trim(),
-                    }),
-                })
+                )
 
                 const data = await response.json()
 

@@ -119,7 +119,7 @@ export default {
         },
         logout() {
             axios
-                .get('https://laravel-library-production.up.railway.app/api/Auth/Logout', {
+                .get('https://e-library.up.railway.app/api/Auth/Logout', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then(() => {

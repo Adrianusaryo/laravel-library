@@ -160,7 +160,7 @@ export default {
             name: '',
             token: '',
             events: [],
-            url: 'https://laravel-library-production.up.railway.app/storage/',
+            url: 'https://e-library.up.railway.app/storage/',
             currentPage: 1,
             lastPage: 1,
             perPage: 6,
@@ -184,7 +184,7 @@ export default {
             this.isLoading = true
             axios
                 .get(
-                    `https://laravel-library-production.up.railway.app/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=dewasa`,
+                    `https://e-library.up.railway.app/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=dewasa`,
                     {
                         headers: { Authorization: `Bearer ${this.token}` },
                     },
@@ -253,7 +253,7 @@ export default {
 
             axios
                 .get(
-                    `https://laravel-library-production.up.railway.app/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=dewasa`,
+                    `https://e-library.up.railway.app/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=dewasa`,
                     {
                         headers: { Authorization: `Bearer ${this.token}` },
                     },
