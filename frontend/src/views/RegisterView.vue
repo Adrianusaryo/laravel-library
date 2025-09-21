@@ -155,7 +155,7 @@ export default {
     methods: {
         register() {
             axios
-                .post('https://laravel-library-production.up.railway.app/api/Auth/Register', {
+                .post('https://e-library.up.railway.app/api/Auth/Register', {
                     name: this.name,
                     email: this.email,
                     password: this.password,
