@@ -206,7 +206,7 @@ export default {
             token: '',
             books: [],
             events: [],
-            url: 'https://laravel-library-production.up.railway.app/storage/',
+            url: 'https://e-library.up.railway.app/storage/',
             isLoadingBuku: false,
             isLoadingAcara: false,
         }
@@ -221,7 +221,7 @@ export default {
         loadBuku() {
             this.isLoadingBuku = true
             axios
-                .get('https://laravel-library-production.up.railway.app/api/Buku/KoleksiBukuHome', {
+                .get('https://e-library.up.railway.app/api/Buku/KoleksiBukuHome', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -244,7 +244,7 @@ export default {
         loadEvents() {
             this.isLoadingAcara = true
             axios
-                .get('https://laravel-library-production.up.railway.app/api/Acara/ListAcaraHome', {
+                .get('https://e-library.up.railway.app/api/Acara/ListAcaraHome', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {

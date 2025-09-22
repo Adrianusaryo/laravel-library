@@ -175,7 +175,7 @@ export default {
         this.name = sessionStorage.getItem('name')
         axios
             .get(
-                'https://laravel-library-production.up.railway.app/api/Peminjaman/LihatPeminjamanBuku',
+                'https://e-library.up.railway.app/api/Peminjaman/LihatPeminjamanBuku',
                 {
                     headers: { Authorization: `Bearer ${this.token}` },
                 },

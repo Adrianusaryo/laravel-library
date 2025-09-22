@@ -52,7 +52,7 @@ export default {
     data() {
         return {
             name: '',
-            url: 'https://laravel-library-production.up.railway.app/storage/',
+            url: 'https://e-library.up.railway.app/storage/',
             cart: useCartStore(),
         }
     },
@@ -73,7 +73,7 @@ export default {
 
             try {
                 const response = await axios.post(
-                    'https://laravel-library-production.up.railway.app/api/Peminjaman/PinjamBuku',
+                    'https://e-library.up.railway.app/api/Peminjaman/PinjamBuku',
                     { buku_id: bukuId },
                     {
                         headers: {

@@ -217,7 +217,7 @@ export default {
             showForm: false,
             token: '',
             poster: null,
-            url: 'http://127.0.0.1:8000/storage/Cerpen/',
+            url: 'https://e-library.up.railway.app/storage/Cerpen/',
             defaultCover,
             loadingCerpen: false,
             loadingSubmit: false,
@@ -233,7 +233,7 @@ export default {
             this.loadingCerpen = true
             axios
                 .get(
-                    'https://laravel-library-production.up.railway.app/api/Cerpen/LihatRiwayatPengiriman',
+                    'https://e-library.up.railway.app/api/Cerpen/LihatRiwayatPengiriman',
                     {
                         headers: { Authorization: `Bearer ${this.token}` },
                     },
@@ -261,7 +261,7 @@ export default {
             formData.append('poster', this.poster)
             axios
                 .post(
-                    'https://laravel-library-production.up.railway.app/api/Cerpen/KirimCerpen',
+                    'https://e-library.up.railway.app/api/Cerpen/KirimCerpen',
                     formData,
                     {
                         headers: {

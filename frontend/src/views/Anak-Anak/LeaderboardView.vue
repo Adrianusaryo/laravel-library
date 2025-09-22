@@ -48,7 +48,7 @@ export default {
     methods: {
         leaderboard() {
             axios
-                .get('http://127.0.0.1:8000/api/Leaderboard/LihatLeaderboardDewasa', {
+                .get('https://e-library.up.railway.app/api/Leaderboard/LihatLeaderboardDewasa', {
                     headers: { Authorization: `Bearer ${this.token}` },
                 })
                 .then((response) => {

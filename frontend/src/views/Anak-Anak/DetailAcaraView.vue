@@ -33,7 +33,7 @@ export default {
         const acaraId = sessionStorage.getItem('event_id')
         try {
             const response = await axios.get(
-                'https://laravel-library-production.up.railway.app/api/Acara/ListAcara',
+                'https://e-library.up.railway.app/api/Acara/ListAcara',
                 {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 },

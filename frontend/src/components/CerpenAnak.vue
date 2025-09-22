@@ -141,7 +141,7 @@ export default {
 
             try {
                 const response = await fetch(
-                    `https://laravel-library-production.up.railway.app/api/Cerpen/UlasanCerpen`,
+                    `https://e-library.up.railway.app/api/Cerpen/UlasanCerpen`,
                     {
                         method: 'POST',
                         headers: {

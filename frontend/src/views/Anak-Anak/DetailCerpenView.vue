@@ -31,7 +31,7 @@ export default {
         const cerpenId = sessionStorage.getItem('cerpen_id')
         try {
             const response = await axios.get(
-                'https://laravel-library-production.up.railway.app/api/Cerpen/LihatCerpen',
+                'https://e-library.up.railway.app/api/Cerpen/LihatCerpen',
                 {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 },

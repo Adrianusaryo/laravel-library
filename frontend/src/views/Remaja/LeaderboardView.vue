@@ -44,7 +44,7 @@ export default {
     methods: {
         leaderboard() {
             axios
-                .get('https://laravel-library-production.up.railway.app/api/Leaderboard/LihatLeaderboardDewasa', {
+                .get('https://e-library.up.railway.app/api/Leaderboard/LihatLeaderboardDewasa', {
                     headers: { Authorization: `Bearer ${this.token}` },
                 })
                 .then((response) => {

@@ -31,7 +31,7 @@ export default {
         const bookId = sessionStorage.getItem('book_id')
         try {
             const response = await axios.get(
-                'https://laravel-library-production.up.railway.app/api/Buku/KoleksiBuku?per_page=1000',
+                'https://e-library.up.railway.app/api/Buku/KoleksiBuku?per_page=1000',
                 {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 },

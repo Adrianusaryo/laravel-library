@@ -150,7 +150,7 @@ export default {
             token: '',
             cerpen: [],
             defaultCover,
-            url: 'http://127.0.0.1:8000/storage/Cerpen/',
+            url: 'https://e-library.up.railway.app/storage/Cerpen/',
             currentPage: 1,
             lastPage: 1,
             perPage: 10,
@@ -174,7 +174,7 @@ export default {
             this.isLoading = true
             axios
                 .get(
-                    `https://laravel-library-production.up.railway.app/api/Cerpen/LihatCerpen?page=${page}&per_page=${this.perPage}`,
+                    `https://e-library.up.railway.app/api/Cerpen/LihatCerpen?page=${page}&per_page=${this.perPage}`,
                     {
                         headers: {
                             Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -213,7 +213,7 @@ export default {
             this.isSearching = true
             axios
                 .get(
-                    `https://laravel-library-production.up.railway.app/api/Cerpen/LihatCerpen?per_page=${this.perPage}`,
+                    `https://e-library.up.railway.app/api/Cerpen/LihatCerpen?per_page=${this.perPage}`,
                     {
                         headers: {
                             Authorization: `Bearer ${sessionStorage.getItem('token')}`,
