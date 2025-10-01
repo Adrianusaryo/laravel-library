@@ -1,19 +1,23 @@
 <template>
-    <section class="login d-flex vh-100">
-        <div class="login-left w-50 h-100 bg-light-subtle">
-            <div class="row justify-content-center align-items-center h-100">
+    <section class="login d-flex flex-column-reverse flex-md-row">
+        <div class="login-left w-md-50 w-100 h-md-100 bg-body-tertiary">
+            <div class="row justify-content-center align-items-center h-100 pt-3">
                 <div class="col-md-7">
-                    <div class="header text-center">
-                        <h2 class="fw-semibold text-dark">
-                            <i class="fa fa-book-open px-2"></i>
-                            E-Library
-                        </h2>
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <img
+                            src="/View_Logo.png"
+                            alt="Logo"
+                            width="100"
+                            class="pb-2 d-none d-md-block"
+                        />
+                        <h2 class="fw-semibold text-dark">Perpustakaan MBK</h2>
                         <p class="text-muted fs-6">
-                            Access your account to explore a world of knowledge and borrow your
-                            favorite books.
+                            Salamat datang di Perpustakaan MBK, temukan bacaan favoritmu setiap
+                            hari.
                         </p>
                     </div>
-                    <div class="login-form">
+
+                    <div class="login-form pb-3">
                         <form @submit.prevent="">
                             <div class="mb-2">
                                 <label for="email" class="form-label fw-medium text-dark"
@@ -73,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="login-right w-50 h-100">
+        <div class="login-right w-md-50 w-100 h-100">
             <div
                 id="carouselExampleFade"
                 class="carousel slide carousel-fade"
@@ -82,13 +86,16 @@
             >
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="4000">
-                        <img src="@/assets/image/perpus1.jpg" class="d-block w-100" alt="..." />
+                        <img src="@/assets/image/login_1.png" class="d-block w-100" alt="..." />
+                        <div class="overlay"></div>
                     </div>
                     <div class="carousel-item" data-bs-interval="4000">
-                        <img src="@/assets/image/perpus2.jpg" class="d-block w-100" alt="..." />
+                        <img src="@/assets/image/login_2.png" class="d-block w-100" alt="..." />
+                        <div class="overlay"></div>
                     </div>
                     <div class="carousel-item" data-bs-interval="4000">
-                        <img src="@/assets/image/perpus3.jpg" class="d-block w-100" alt="..." />
+                        <img src="@/assets/image/login_3.png" class="d-block w-100" alt="..." />
+                        <div class="overlay"></div>
                     </div>
                 </div>
             </div>
@@ -158,35 +165,33 @@ export default {
 }
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 
 .login {
-    font-family: 'Roboto', sans-serif;
-}
-
-.bg-dark {
-    background-color: #f4f6f9 !important;
+    font-family: 'Nunito';
 }
 
 .text-dark {
-    color: #344767 !important;
+    color: #552801 !important;
+    line-height: 1.5rem;
 }
 
 .btn-dark {
-    background-color: #344767 !important;
-}
-
-.carousel-inner {
-    height: 100vh;
-    display: flex;
-    align-items: center;
+    background-color: #552801 !important;
 }
 
 .carousel-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    position: relative;
+}
+
+.carousel-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
 }
 
 .carousel-item img {
@@ -197,7 +202,7 @@ export default {
 }
 
 .form-control:focus {
-    border-color: #344767 !important;
-    box-shadow: 0 0 0 0.2rem rgba(52, 71, 103, 0.25) !important;
+    border-color: #552801 !important;
+    box-shadow: 0 0 0 0.2rem rgba(85, 40, 1, 0.25) !important;
 }
 </style>
