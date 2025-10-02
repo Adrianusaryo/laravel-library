@@ -1,107 +1,86 @@
 <template>
-    <section class="login d-flex flex-column-reverse flex-md-row">
-        <div class="login-left w-md-50 w-100 h-md-100 bg-body-tertiary">
-            <div class="row justify-content-center align-items-center h-100 pt-3">
-                <div class="col-md-7">
-                    <div class="d-flex flex-column align-items-center text-center">
-                        <img
-                            src="/View_Logo.png"
-                            alt="Logo"
-                            width="100"
-                            class="pb-2 d-none d-md-block"
-                        />
-                        <h2 class="fw-semibold text-dark">Perpustakaan MBK</h2>
-                        <p class="text-muted fs-6">
-                            Salamat datang di Perpustakaan MBK, temukan bacaan favoritmu setiap
-                            hari.
-                        </p>
+    <section class="login d-flex align-items-center justify-content-center min-vh-100 bg-light">
+        <div class="col-11 col-md-6 col-lg-4">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-body p-4">
+                    <!-- Logo & Title -->
+                    <div class="text-center mb-4">
+                        <img src="/View_Logo.png" alt="Logo" width="80" class="mb-2" />
+                        <h3 class="fw-bold text-dark">Perpustakaan MBK</h3>
+                        <p class="text-secondary small">Nikmati bacaanmu di Perpustakaan MBK.</p>
                     </div>
 
-                    <div class="login-form pb-3">
-                        <form @submit.prevent="">
-                            <div class="mb-2">
-                                <label for="email" class="form-label fw-medium text-dark"
-                                    >Email</label
-                                >
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    id="email"
-                                    placeholder="Masukan Email "
-                                    v-model="email"
-                                    :class="{ 'is-invalid': errors.email }"
-                                />
-                                <div v-if="errors.email" class="invalid-feedback">
-                                    {{ errors.email[0] }}
-                                </div>
+                    <!-- Login Form -->
+                    <form @submit.prevent="">
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-semibold text-dark"
+                                >Email</label
+                            >
+                            <input
+                                type="email"
+                                id="email"
+                                class="form-control rounded-pill"
+                                placeholder="Masukkan Email"
+                                v-model="email"
+                                :class="{ 'is-invalid': errors.email }"
+                            />
+                            <div v-if="errors.email" class="invalid-feedback">
+                                {{ errors.email[0] }}
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label fw-medium text-dark"
-                                    >Password</label
-                                >
-                                <div class="input-group has-validation">
-                                    <input
-                                        :type="showPassword ? 'text' : 'password'"
-                                        class="form-control"
-                                        id="password"
-                                        placeholder="Masukan Password"
-                                        v-model="password"
-                                        :class="{ 'is-invalid': errors.password }"
-                                    />
-                                    <span
-                                        class="input-group-text text-dark"
-                                        @click="togglePassword"
-                                        style="cursor: pointer"
-                                    >
-                                        <i
-                                            :class="showPassword ? 'fas fa-unlock' : 'fas fa-lock'"
-                                        ></i>
-                                    </span>
-                                    <div v-if="errors.password" class="invalid-feedback">
-                                        {{ errors.password[0] }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button @click="login()" class="btn btn-dark w-100">Login</button>
-                        </form>
-                        <div class="text-center mt-2">
-                            <span class="text-muted"
-                                >Don't have an account ?
-                                <RouterLink to="/register" class="text-dark fst-italic fw-medium"
-                                    >Sign up for free</RouterLink
-                                >
-                            </span>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="login-right w-md-50 w-100 h-100">
-            <div
-                id="carouselExampleFade"
-                class="carousel slide carousel-fade"
-                data-bs-ride="carousel"
-                data-bs-pause="false"
-            >
-                <div class="carousel-inner">
-                    <div class="carousel-item active" data-bs-interval="4000">
-                        <img src="@/assets/image/login_1.png" class="d-block w-100" alt="..." />
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="carousel-item" data-bs-interval="4000">
-                        <img src="@/assets/image/login_2.png" class="d-block w-100" alt="..." />
-                        <div class="overlay"></div>
-                    </div>
-                    <div class="carousel-item" data-bs-interval="4000">
-                        <img src="@/assets/image/login_3.png" class="d-block w-100" alt="..." />
-                        <div class="overlay"></div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label fw-semibold text-dark"
+                                >Password</label
+                            >
+                            <div class="input-group">
+                                <input
+                                    :type="showPassword ? 'text' : 'password'"
+                                    id="password"
+                                    class="form-control rounded-start-pill"
+                                    placeholder="Masukkan Password"
+                                    v-model="password"
+                                    :class="{ 'is-invalid': errors.password }"
+                                />
+                                <button
+                                    type="button"
+                                    class="btn btn-dark rounded-end-pill"
+                                    @click="togglePassword"
+                                >
+                                    <i :class="showPassword ? 'fas fa-unlock' : 'fas fa-lock'"></i>
+                                </button>
+                                <div v-if="errors.password" class="invalid-feedback d-block">
+                                    {{ errors.password[0] }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            @click="login()"
+                            class="btn btn-dark w-100 rounded-pill fw-semibold"
+                        >
+                            Login
+                        </button>
+                    </form>
+
+                    <!-- Register Link -->
+                    <div class="text-center mt-3">
+                        <small class="text-muted">
+                            Belum punya akun?
+                            <RouterLink
+                                to="/register"
+                                class="fw-semibold text-decoration-none text-dark"
+                            >
+                                Daftar Gratis
+                            </RouterLink>
+                        </small>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </template>
+
 <script>
 import axios from 'axios'
 import router from '@/router'
