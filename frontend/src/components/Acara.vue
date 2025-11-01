@@ -73,7 +73,7 @@
 export default {
     data() {
         return {
-            url: 'https://e-library.up.railway.app/storage/',
+            url: 'http://127.0.0.1:8000/storage/',
         }
     },
     props: {

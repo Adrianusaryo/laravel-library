@@ -116,7 +116,7 @@ export default {
         },
         logout() {
             axios
-                .get('https://e-library.up.railway.app/api/Auth/Logout', {
+                .get('http://127.0.0.1:8000/api/Auth/Logout', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then(() => {

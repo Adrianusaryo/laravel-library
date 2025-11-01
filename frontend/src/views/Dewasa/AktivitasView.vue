@@ -174,7 +174,7 @@ export default {
         this.token = sessionStorage.getItem('token')
         this.name = sessionStorage.getItem('name')
         axios
-            .get('https://e-library.up.railway.app/api/Peminjaman/LihatPeminjamanBuku', {
+            .get('http://127.0.0.1:8000/api/Peminjaman/LihatPeminjamanBuku', {
                 headers: { Authorization: `Bearer ${this.token}` },
             })
             .then((response) => {
@@ -222,6 +222,14 @@ export default {
 </script>
 
 <style scoped>
+* {
+    font-family: 'Nunito';
+}
+
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
+}
+
 .badge {
     font-size: 0.75rem;
     padding: 0.4em 0.6em;

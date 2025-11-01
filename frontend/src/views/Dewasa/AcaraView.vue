@@ -160,7 +160,7 @@ export default {
             name: '',
             token: '',
             events: [],
-            url: 'https://e-library.up.railway.app/storage/',
+            url: 'http://127.0.0.1:8000/storage/',
             currentPage: 1,
             lastPage: 1,
             perPage: 6,
@@ -184,7 +184,7 @@ export default {
             this.isLoading = true
             axios
                 .get(
-                    `https://e-library.up.railway.app/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=dewasa`,
+                    `http://127.0.0.1:8000/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=dewasa`,
                     {
                         headers: { Authorization: `Bearer ${this.token}` },
                     },
@@ -253,7 +253,7 @@ export default {
 
             axios
                 .get(
-                    `https://e-library.up.railway.app/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=dewasa`,
+                    `http://127.0.0.1:8000/api/Acara/ListAcara?page=${page}&per_page=${this.perPage}&usia=dewasa`,
                     {
                         headers: { Authorization: `Bearer ${this.token}` },
                     },
@@ -280,6 +280,15 @@ export default {
 }
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+* {
+    font-family: 'Nunito';
+}
+
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
+}
+
 .page-item.disabled .page-link {
     pointer-events: none;
     opacity: 0.6;

@@ -3,14 +3,14 @@
         <NavbarDewasa :name="name" />
         <div class="flex-grow-1 px-4">
             <div class="container">
-                <h5 class="fw-bold mt-4" style="line-height: 10px">Leaderboard</h5>
+                <h5 class="fw-bold mt-4" style="line-height: 10px">Papan Peringkat</h5>
                 <p class="text-muted">
-                    Peringkat pengguna berdasarkan aktivitas peminjaman buku terbanyak.
+                    Daftar peringkat anggota berdasarkan jumlah peminjaman buku terbanyak.
                 </p>
                 <div class="alert alert-dark py-2 px-3 mb-4" role="alert" style="font-size: 14px">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Ayo pinjam buku, kumpulkan 10 poin tiap transaksi, dan raih kesempatan
-                    memenangkan hadiah menarik sebagai 3 peringkat teratas bulanan!
+                    <i class="fa fa-info-circle me-2"></i>
+                    Dapatkan 10 poin untuk setiap peminjaman buku dan raih posisi tiga teratas
+                    bulanan untuk memperoleh penghargaan menarik.
                 </div>
 
                 <!-- Kirim leaderboardUsers sebagai prop ke child component -->
@@ -48,7 +48,7 @@ export default {
     methods: {
         leaderboard() {
             axios
-                .get('https://e-library.up.railway.app/api/Leaderboard/LihatLeaderboardDewasa', {
+                .get('http://127.0.0.1:8000/api/Leaderboard/LihatLeaderboardDewasa', {
                     headers: { Authorization: `Bearer ${this.token}` },
                 })
                 .then((response) => {
@@ -61,3 +61,13 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+* {
+    font-family: 'Nunito';
+}
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
+}
+</style>

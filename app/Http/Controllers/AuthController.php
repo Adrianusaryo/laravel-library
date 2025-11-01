@@ -14,7 +14,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => ['required', 'min:8', 'string', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@#$%*&!]/', 'cofirmed'],
             'tanggal_lahir' => 'required',
         ]);
 
@@ -40,11 +40,11 @@ class AuthController extends Controller
 
         if (!$user) {
             throw ValidationException::withMessages([
-                'email' => ['Invalid Username']
+                'email' => ['Email tidak terdaftar.']
             ]);
         } elseif (!Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'password' => ['Invalid Password']
+                'password' => ['Kata sandi tidak sesuai']
             ]);
         }
 

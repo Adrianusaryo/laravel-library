@@ -4,8 +4,8 @@
             <div class="card shadow rounded-4 border-0">
                 <div class="card-body p-4">
                     <!-- Logo & Title -->
-                    <div class="text-center mb-4">
-                        <img src="/View_Logo.png" alt="Logo" width="80" class="mb-2" />
+                    <div class="text-center">
+                        <img src="/View_Logo.png" alt="Logo" width="110" class="mb-2" />
                         <h3 class="fw-bold text-dark">Perpustakaan MBK</h3>
                         <p class="text-secondary small">Nikmati bacaanmu di Perpustakaan MBK.</p>
                     </div>
@@ -67,10 +67,7 @@
                     <div class="text-center mt-3">
                         <small class="text-muted">
                             Belum punya akun?
-                            <RouterLink
-                                to="/register"
-                                class="fw-semibold text-decoration-none text-dark"
-                            >
+                            <RouterLink to="/register" class="fw-semibold text-dark">
                                 Daftar Gratis
                             </RouterLink>
                         </small>
@@ -96,7 +93,7 @@ export default {
     methods: {
         login() {
             axios
-                .post('https://e-library.up.railway.app/api/Auth/Login', {
+                .post('http://127.0.0.1:8000/api/Auth/Login', {
                     email: this.email,
                     password: this.password,
                 })
@@ -104,26 +101,26 @@ export default {
                     sessionStorage.setItem('email', response.data.data.email)
                     sessionStorage.setItem('name', response.data.data.name)
                     sessionStorage.setItem('token', response.data.data.token)
-                    sessionStorage.setItem('tanggal_lahir', response.data.data.tanggal_lahir)
 
-                    const today = new Date()
-                    const birthDate = new Date(response.data.data.tanggal_lahir)
-                    let age = today.getFullYear() - birthDate.getFullYear()
-                    const monthDiff = today.getMonth() - birthDate.getMonth()
-                    if (
-                        monthDiff < 0 ||
-                        (monthDiff == 0 && today.getDate() < birthDate.getDate())
-                    ) {
-                        age--
-                    }
+                    router.push({ name: 'dewasa' })
+                    // const today = new Date()
+                    // const birthDate = new Date(response.data.data.tanggal_lahir)
+                    // let age = today.getFullYear() - birthDate.getFullYear()
+                    // const monthDiff = today.getMonth() - birthDate.getMonth()
+                    // if (
+                    //     monthDiff < 0 ||
+                    //     (monthDiff == 0 && today.getDate() < birthDate.getDate())
+                    // ) {
+                    //     age--
+                    // }
 
-                    if (age >= 2 && age <= 12) {
-                        router.push({ name: 'anak-anak' })
-                    } else if (age >= 13 && age <= 21) {
-                        router.push({ name: 'remaja' })
-                    } else {
-                        router.push({ name: 'dewasa' })
-                    }
+                    // if (age >= 2 && age <= 12) {
+                    //     router.push({ name: 'anak-anak' })
+                    // } else if (age >= 13 && age <= 21) {
+                    //     router.push({ name: 'remaja' })
+                    // } else {
+                    //     router.push({ name: 'dewasa' })
+                    // }
                 })
                 .catch((error) => {
                     if (error.response && error.response.data.errors) {
@@ -151,37 +148,15 @@ export default {
 }
 
 .text-dark {
-    color: #552801 !important;
     line-height: 1.5rem;
 }
 
-.btn-dark {
+/* .btn-dark {
     background-color: #552801 !important;
-}
-
-.carousel-item {
-    position: relative;
-}
-
-.carousel-item .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 1;
-}
-
-.carousel-item img {
-    max-height: 100vh;
-    width: auto;
-    object-fit: cover;
-    object-position: center center;
-}
+} */
 
 .form-control:focus {
-    border-color: #552801 !important;
-    box-shadow: 0 0 0 0.2rem rgba(85, 40, 1, 0.25) !important;
+    border-color: #222 !important;
+    box-shadow: 0 0 0 0.15rem rgba(0, 0, 0, 0.25) !important;
 }
 </style>

@@ -31,7 +31,7 @@ export default {
         const bookId = sessionStorage.getItem('book_id')
         try {
             const response = await axios.get(
-                'https://e-library.up.railway.app/api/Buku/KoleksiBuku?per_page=1000',
+                'http://127.0.0.1:8000/api/Buku/KoleksiBuku?per_page=1000',
                 {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 },
@@ -47,4 +47,12 @@ export default {
     },
 }
 </script>
-<style></style>
+<style scoped>
+* {
+    font-family: 'Nunito';
+}
+
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
+}
+</style>

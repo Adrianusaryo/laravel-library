@@ -177,7 +177,7 @@ export default {
         getUsulanBuku() {
             this.loadingUsulan = true
             axios
-                .get('https://e-library.up.railway.app/api/Buku/LihatUsulBuku', {
+                .get('http://127.0.0.1:8000/api/Buku/LihatUsulBuku', {
                     headers: { Authorization: `Bearer ${this.token}` },
                 })
                 .then((response) => {
@@ -198,7 +198,7 @@ export default {
             this.loadingSubmit = true
             axios
                 .post(
-                    'https://e-library.up.railway.app/api/Buku/UsulBuku',
+                    'http://127.0.0.1:8000/api/Buku/UsulBuku',
                     {
                         judul: this.judul,
                         penerbit: this.penerbit,
@@ -232,5 +232,14 @@ export default {
 .form-control:focus {
     border-color: #344767 !important;
     box-shadow: 0 0 0 0.2rem rgba(52, 71, 103, 0.25) !important;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+* {
+    font-family: 'Nunito';
+}
+
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
 }
 </style>

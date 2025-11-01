@@ -33,7 +33,7 @@ export default {
         this.name = sessionStorage.getItem('name')
         const acaraId = sessionStorage.getItem('event_id')
         try {
-            const response = await axios.get('https://e-library.up.railway.app/api/Acara/ListAcara', {
+            const response = await axios.get('http://127.0.0.1:8000/api/Acara/ListAcara', {
                 headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
             })
             const events = response.data.data || response.data
@@ -47,4 +47,13 @@ export default {
     },
 }
 </script>
-<style scoped></style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+* {
+    font-family: 'Nunito';
+}
+
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
+}
+</style>

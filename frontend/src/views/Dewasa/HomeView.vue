@@ -206,7 +206,7 @@ export default {
             token: '',
             books: [],
             events: [],
-            url: 'https://e-library.up.railway.app/storage/',
+            url: 'http://127.0.0.1:8000/storage/',
             isLoadingBuku: false,
             isLoadingAcara: false,
         }
@@ -221,7 +221,7 @@ export default {
         loadBuku() {
             this.isLoadingBuku = true
             axios
-                .get('https://e-library.up.railway.app/api/Buku/KoleksiBukuHome', {
+                .get('http://127.0.0.1:8000/api/Buku/KoleksiBukuHome', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -244,7 +244,7 @@ export default {
         loadEvents() {
             this.isLoadingAcara = true
             axios
-                .get('https://e-library.up.railway.app/api/Acara/ListAcaraHome', {
+                .get('http://127.0.0.1:8000/api/Acara/ListAcaraHome', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -301,3 +301,14 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+* {
+    font-family: 'Nunito';
+}
+
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
+}
+</style>

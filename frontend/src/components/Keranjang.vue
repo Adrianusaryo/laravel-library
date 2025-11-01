@@ -1,10 +1,7 @@
 <template>
-    <div
-        class="card border-0 mb-3 d-flex flex-row align-items-start shadow-sm"
-        style="border-radius: 12px; overflow: hidden; background-color: #f9f9f9"
-    >
+    <div class="card border-0 rounded mb-3 d-flex flex-row align-items-start shadow-sm bg-light">
         <!-- Gambar Cover -->
-        <div class="position-relative p-3" style="min-width: 100px; max-width: 140px">
+        <div class="position-relative py-3 px-2" style="min-width: 150px; max-width: 140px">
             <img
                 :src="cover"
                 alt="Cover Buku"
@@ -14,14 +11,12 @@
         </div>
 
         <!-- Info Buku -->
-        <div class="flex-grow-1 p-3">
-            <h5 class="fw-bold mb-1" style="line-height: 1.3">{{ judul }}</h5>
-            <p class="mb-2 text-muted" style="font-size: 0.9rem">{{ pengarang }}</p>
-            <p class="mb-3 text-secondary" style="font-size: 0.85rem">
+        <div class="flex-grow-1 pt-5 px-2" style="line-height: 1rem">
+            <h5 class="fw-bold" style="line-height: 0.5rem">{{ judul }}</h5>
+            <p class="text-muted" style="font-size: 0.9rem">{{ pengarang }}</p>
+            <p class="text-secondary" style="font-size: 0.85rem">
                 {{ deskripsi }}
             </p>
-
-            <!-- Catatan + Tombol Hapus -->
             <div class="d-flex align-items-start">
                 <input
                     type="text"
@@ -53,3 +48,5 @@ export default {
     },
 }
 </script>
+
+<style scoped></style>

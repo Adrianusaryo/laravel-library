@@ -136,7 +136,7 @@
 
 <script>
 import { useCartStore } from '@/stores/cartStore'
-import { mapActions } from 'pinia'
+import Swal from 'sweetalert2'
 
 export default {
     props: {
@@ -152,7 +152,7 @@ export default {
     data() {
         return {
             reviewText: '',
-            url: 'https://e-library.up.railway.app/storage/',
+            url: 'http://127.0.0.1:8000/storage/',
             cart: null,
             reviewsLocal: [],
         }
@@ -170,12 +170,17 @@ export default {
     methods: {
         addToCart() {
             this.cart.addToCart(this.book)
-            alert('Buku ditambahkan ke keranjang')
+            Swal.fire({
+                title: 'Berhasil',
+                text: 'Buku telah berhasil dimasukkan ke dalam keranjang.',
+                icon: 'success',
+                confirmButtonText: 'Lanjutkan',
+            })
         },
         async fetchReviews() {
             try {
                 const response = await fetch(
-                    `https://e-library.up.railway.app/api/Buku/LihatUlasanBuku/${this.book.id}`,
+                    `http://127.0.0.1:8000/api/Buku/LihatUlasanBuku/${this.book.id}`,
                     {
                         headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                     },
@@ -202,20 +207,17 @@ export default {
             }
 
             try {
-                const response = await fetch(
-                    `https://e-library.up.railway.app/api/Buku/UlasanBuku`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-                        },
-                        body: JSON.stringify({
-                            buku_id: this.book.id,
-                            comment: this.reviewText.trim(),
-                        }),
+                const response = await fetch(`http://127.0.0.1:8000/api/Buku/UlasanBuku`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
                     },
-                )
+                    body: JSON.stringify({
+                        buku_id: this.book.id,
+                        comment: this.reviewText.trim(),
+                    }),
+                })
 
                 const data = await response.json()
 

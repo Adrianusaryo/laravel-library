@@ -1,27 +1,26 @@
 <template>
     <div class="d-flex min-vh-100">
         <NavbarDewasa :name="name" />
-        <div class="flex-grow-1 px-4 py-4 bg-light">
+        <div class="flex-grow-1 px-4 py-4">
             <div class="container">
                 <!-- Biodata Section -->
-                <div class="card shadow-sm mb-4">
+                <div class="card shadow-sm mb-4 rounded">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="fw-medium mb-0">
-                                <i class="fa fa-address-card me-2 text-dark"></i>Biodata
+                                <i class="fa fa-address-book me-2"></i>Informasi Pribadi
                             </h5>
                             <button
                                 class="btn btn-dark rounded btn-sm py-2 px-3"
                                 @click="showForm = !showForm"
                             >
                                 <i class="fa fa-pen-to-square me-1"></i>
-                                {{ showForm ? 'Batal' : 'Perbarui Data' }}
+                                Perbaruan Informasi
                             </button>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
-                            <!-- Display Biodata -->
                             <div class="col-md-6" v-for="(value, key) in displayBiodata" :key="key">
                                 <label class="fw-semibold">{{ value.label }}</label>
                                 <div>{{ value.value }}</div>
@@ -71,7 +70,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">No. WhatsApp</label>
+                                    <label class="form-label">Nomor Telfon</label>
                                     <input
                                         v-model="biodata.nomor_telfon"
                                         class="form-control"
@@ -154,7 +153,7 @@ export default {
                 name: { label: 'Nama Lengkap', value: this.biodata.name },
                 email: { label: 'Email', value: this.biodata.email },
                 jenis_kelamin: { label: 'Jenis Kelamin', value: this.biodata.jenis_kelamin },
-                nomor_telfon: { label: 'No. WhatsApp', value: this.biodata.nomor_telfon },
+                nomor_telfon: { label: 'Nomor Telfon', value: this.biodata.nomor_telfon },
                 alamat: { label: 'Alamat', value: this.biodata.alamat },
                 tanggal_lahir: { label: 'Tanggal Lahir', value: this.biodata.tanggal_lahir },
             }
@@ -167,7 +166,7 @@ export default {
     methods: {
         fetchUserData() {
             axios
-                .get('https://e-library.up.railway.app/api/Auth/Profile', {
+                .get('http://127.0.0.1:8000/api/Auth/Profile', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -175,10 +174,10 @@ export default {
                     this.biodata = {
                         name: user.name || '',
                         email: user.email || '',
-                        jenis_kelamin: user.jenis_kelamin || '-',
-                        nomor_telfon: user.nomor_telfon || '',
-                        alamat: user.alamat || '',
-                        tanggal_lahir: user.tanggal_lahir || '',
+                        jenis_kelamin: user.jenis_kelamin || 'Tidak Tersedia',
+                        nomor_telfon: user.nomor_telfon || 'Tidak Tersedia',
+                        alamat: user.alamat || 'Tidak Tersedia',
+                        tanggal_lahir: user.tanggal_lahir || 'Tidak Tersedia',
                     }
                 })
                 .catch((error) => {
@@ -186,11 +185,9 @@ export default {
                 })
         },
         submitUpdate() {
-            // Reset error object
             this.errors = {}
-
             axios
-                .put('https://e-library.up.railway.app/api/Auth/ProfileUpdate', this.biodata, {
+                .put('http://127.0.0.1:8000/api/Auth/ProfileUpdate', this.biodata, {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -212,7 +209,11 @@ export default {
 </script>
 
 <style scoped>
-.card {
-    border-radius: 1rem;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+* {
+    font-family: 'Nunito';
+}
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
 }
 </style>

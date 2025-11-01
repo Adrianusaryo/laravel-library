@@ -1,104 +1,103 @@
 <template>
     <div class="d-flex">
         <aside :class="['sidebar', { 'is-expanded': isExpanded }]">
-            <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
+            <div class="p-3 border-bottom d-flex align-items-center">
                 <RouterLink
                     class="navbar-brand fs-5 fw-semibold d-flex align-items-center"
                     to="/Dewasa"
                 >
-                    <i class="fa fa-book-open me-2"></i>
-                    <span v-if="isExpanded">E-Library Adult</span>
+                    <span v-if="isExpanded">Perpustakaan MBK</span>
                 </RouterLink>
 
                 <button class="btn btn-sm btn-toggle" @click="toggleSidebar">
-                    <i :class="isExpanded ? 'fa fa-chevron-left' : 'fa fa-bars'"></i>
+                    <i :class="isExpanded ? 'fa fa-angles-left' : 'fa fa-bars'"></i>
                 </button>
             </div>
 
             <div class="scroll-wrapper">
-                <ul class="nav flex-column mt-3 px-2">
-                    <li class="nav-item my-1">
+                <ul class="nav flex-column mt-2 px-2">
+                    <li class="nav-item my-1" style="font-size: 15px">
                         <RouterLink
-                            class="nav-link text-muted d-flex align-items-center"
+                            class="nav-link text-dark d-flex align-items-center"
                             to="/Dewasa"
                         >
-                            <i class="fa fa-home me-2"></i>
-                            <span v-if="isExpanded">Home</span>
+                            <i class="fa fa-house-chimney me-2"></i>
+                            <span v-if="isExpanded">Beranda</span>
                         </RouterLink>
                     </li>
-                    <li class="nav-item my-1">
+                    <li class="nav-item my-1" style="font-size: 15px">
                         <RouterLink
-                            class="nav-link text-muted d-flex align-items-center"
+                            class="nav-link text-dark d-flex align-items-center"
                             to="/Dewasa/Koleksi"
                         >
-                            <i class="fa fa-book me-2"></i>
+                            <i class="fa fa-book-open me-2"></i>
                             <span v-if="isExpanded">Daftar Koleksi</span>
                         </RouterLink>
                     </li>
-                    <li class="nav-item my-1">
+                    <li class="nav-item my-1" style="font-size: 15px">
                         <RouterLink
-                            class="nav-link text-muted d-flex align-items-center"
+                            class="nav-link text-dark d-flex align-items-center"
                             to="/Dewasa/Leaderboard"
                         >
-                            <i class="fa fa-trophy me-2"></i>
-                            <span v-if="isExpanded">Leaderboard</span>
+                            <i class="fa fa-chart-simple me-2"></i>
+                            <span v-if="isExpanded">Papan Peringkat</span>
                         </RouterLink>
                     </li>
-                    <li class="nav-item my-1">
+                    <li class="nav-item my-1" style="font-size: 15px">
                         <RouterLink
-                            class="nav-link d-flex text-muted align-items-center"
+                            class="nav-link text-dark d-flex align-items-center"
                             to="/Dewasa/Keranjang"
                         >
-                            <i class="fa fa-bag-shopping me-2"></i>
+                            <i class="fa fa-briefcase me-2"></i>
                             <span v-if="isExpanded">Keranjang</span>
                         </RouterLink>
                     </li>
-                    <li class="nav-item my-1">
+                    <li class="nav-item my-1" style="font-size: 15px">
                         <RouterLink
-                            class="nav-link text-muted d-flex align-items-center"
+                            class="nav-link text-dark d-flex align-items-center"
                             to="/Dewasa/Acara"
                         >
-                            <i class="fa fa-calendar me-2"></i>
+                            <i class="fa fa-calendar-days me-2"></i>
                             <span v-if="isExpanded">Acara</span>
                         </RouterLink>
                     </li>
-                    <li class="nav-item my-1">
+                    <li class="nav-item my-1" style="font-size: 15px">
                         <RouterLink
-                            class="nav-link text-muted d-flex align-items-center"
+                            class="nav-link text-dark d-flex align-items-center"
                             to="/Dewasa/Aktivitas"
                         >
-                            <i class="fa fa-repeat me-2"></i>
-                            <span v-if="isExpanded" class="text-dark">Aktivitas</span>
+                            <i class="fa fa-history me-2"></i>
+                            <span v-if="isExpanded">Riwayat Peminjaman</span>
                         </RouterLink>
                     </li>
-                    <li class="nav-item my-1">
+                    <li class="nav-item my-1" style="font-size: 15px">
                         <RouterLink
-                            class="nav-link text-muted d-flex align-items-center"
+                            class="nav-link text-dark d-flex align-items-center"
                             to="/Dewasa/Usul-Buku"
                         >
-                            <i class="fa fa-download me-2"></i>
-                            <span v-if="isExpanded">Usul Buku</span>
+                            <i class="fa fa-paper-plane me-2"></i>
+                            <span v-if="isExpanded">Usulan Koleksi</span>
                         </RouterLink>
                     </li>
-                    <li class="nav-item my-1">
+                    <li class="nav-item my-1" style="font-size: 15px">
                         <RouterLink
-                            class="nav-link text-muted d-flex align-items-center"
+                            class="nav-link text-dark d-flex align-items-center"
                             to="/Dewasa/Profil"
                         >
-                            <i class="fa fa-user-secret me-2"></i>
+                            <i class="fa fa-user-gear me-2"></i>
                             <span v-if="isExpanded">{{ name }}</span>
                         </RouterLink>
                     </li>
                 </ul>
             </div>
 
-            <div class="mt-3 px-3 mb-2">
+            <div class="px-3 my-2">
                 <button
-                    class="btn btn-dark w-100 d-flex align-items-center justify-content-center"
+                    class="btn btn-outline-dark btn-sm w-100 d-flex align-items-center justify-content-center py-2"
                     @click="logout"
                 >
-                    <i class="fa fa-door-open me-2"></i>
-                    <span v-if="isExpanded">Logout</span>
+                    <i class="fa fa-right-from-bracket mx-2"></i>
+                    <span v-if="isExpanded" style="font-family: Nunito">Keluar Akun</span>
                 </button>
             </div>
         </aside>
@@ -128,7 +127,7 @@ export default {
         },
         logout() {
             axios
-                .get('https://e-library.up.railway.app/api/Auth/Logout', {
+                .get('http://127.0.0.1:8000/api/Auth/Logout', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then(() => {
@@ -144,6 +143,8 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+
 .sidebar {
     width: 70px;
     transition: all 0.3s ease;
@@ -154,16 +155,13 @@ export default {
 }
 
 .sidebar.is-expanded {
-    width: 250px;
+    width: 240px;
 }
 
 .nav-link {
-    color: #6c757d;
     border-radius: 20px;
     transition: all 0.2s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-family: 'Nunito';
 }
 
 .nav-link:hover {
@@ -173,8 +171,8 @@ export default {
 }
 
 .navbar-brand {
-    /* color: #344767; */
     transition: background-color 0.2s ease;
+    font-family: 'Nunito';
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -183,7 +181,7 @@ export default {
 .btn-toggle {
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #344767;
 }
 </style>

@@ -42,6 +42,7 @@ import Footer from '@/components/Footer.vue'
 import NavbarDewasa from '@/components/NavbarDewasa.vue'
 import PeminjamanItem from '@/components/Keranjang.vue'
 import { useCartStore } from '@/stores/cartStore'
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -52,7 +53,7 @@ export default {
     data() {
         return {
             name: '',
-            url: 'https://e-library.up.railway.app/storage/',
+            url: 'http://127.0.0.1:8000/storage/',
             cart: useCartStore(),
         }
     },
@@ -73,7 +74,7 @@ export default {
 
             try {
                 const response = await axios.post(
-                    'https://e-library.up.railway.app/api/Peminjaman/PinjamBuku',
+                    'http://127.0.0.1:8000/api/Peminjaman/PinjamBuku',
                     { buku_id: bukuId },
                     {
                         headers: {
@@ -81,7 +82,12 @@ export default {
                         },
                     },
                 )
-                alert('Peminjaman Berhasil')
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Peminjaman buku berhasil dilakukan',
+                    icon: 'success',
+                    confirmButtonText: 'Lanjutkan',
+                })
                 this.cart.clearCart()
             } catch (error) {
                 console.error('Gagal meminjam buku:', error)
@@ -91,4 +97,13 @@ export default {
     },
 }
 </script>
-<style></style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+* {
+    font-family: 'Nunito';
+}
+
+.fa {
+    font-family: 'Font Awesome 6 Free' !important;
+}
+</style>
