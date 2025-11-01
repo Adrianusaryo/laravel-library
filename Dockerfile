@@ -23,5 +23,9 @@ RUN composer install --optimize-autoloader --no-interaction --no-scripts
 # Jalankan artisan command (opsional)
 RUN php artisan config:cache && php artisan route:cache
 
+RUN chmod -R 777 storage bootstrap/cache
+
 # Default command
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+
+
